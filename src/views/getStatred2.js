@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { Dimensions, StyleSheet, Text, View, Image } from 'react-native';
+import { Text, View, Image } from 'react-native';
 import { Button, CheckBox } from 'react-native-elements';
 // import { RNCamera, FaceDetector } from 'react-native-camera';
 import { storeData } from '../utils/functions';
+import { styles } from './getStarted2_style';
 
 const icon = require('../../images/logo.png');
 
-const { width } = Dimensions.get('window');
 const FONT_NAME = 'AvenirNext-Regular';
 
 export default class App extends Component {
@@ -89,41 +89,3 @@ export default class App extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  mainContainer: {
-    flex: 1,
-    flexDirection: 'column',
-    backgroundColor: 'white',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 8
-  },
-  sliderItemContainer: {
-    alignSelf: 'stretch',
-    paddingHorizontal: '5%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'white',
-    flexDirection: 'column'
-  },
-  textContentAreaTitle: {
-    margin: 16,
-    fontSize: 16,
-    color: '#333333',
-    textAlign: 'center',
-    fontFamily: FONT_NAME
-  },
-  imageContentArea: {
-    width: width * 0.5,
-    height: width * 0.5,
-    marginVertical: 8,
-    marginBottom: 40
-  },
-  checkBoxStyle: {
-    fontSize: 16,
-    color: '#333333',
-    fontWeight: 'normal',
-    fontFamily: FONT_NAME
-  }
-});
