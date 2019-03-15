@@ -70,7 +70,7 @@ export default class App extends Component {
           <Text style={textstyle}>{message}</Text>
         </View>
         <Button
-          buttonStyle={{ marginTop: 8 }}
+          buttonStyle={styles.button}
           onPress={() => {
             this.setState({ showCamera: false, loading: false, result: null });
           }}
@@ -78,12 +78,7 @@ export default class App extends Component {
           large
           backgroundColor={!healthy ? '#85bf43' : '#eb8c30'}
           title="Check Another Product"
-          textStyle={{
-            fontSize: 16,
-            color: '#ffffff',
-            fontWeight: 'normal',
-            fontFamily: FONT_NAME
-          }}
+          textStyle={styles.buttonText}
         />
       </View>
     );
@@ -208,12 +203,7 @@ export default class App extends Component {
                 rounded
                 large
                 title="CANCEL"
-                textStyle={{
-                  fontSize: 20,
-                  color: '#ffffff',
-                  fontWeight: 'normal',
-                  fontFamily: FONT_NAME
-                }}
+                textStyle={[styles.buttonText, styles.buttonFontLarge]}
               />
             </View>
           </View>
@@ -327,7 +317,7 @@ export default class App extends Component {
           </Text>
         </View>
         <Button
-          buttonStyle={{ marginTop: 8 }}
+          buttonStyle={styles.button}
           onPress={() => {
             // this.fetchData();
             this.setState({ showCamera: true, barcode: '' });
@@ -336,12 +326,7 @@ export default class App extends Component {
           large
           backgroundColor="#85bf43"
           title="Take a photo"
-          textStyle={{
-            fontSize: 20,
-            color: '#ffffff',
-            fontWeight: 'normal',
-            fontFamily: FONT_NAME
-          }}
+          textStyle={[styles.buttonText, styles.buttonFontLarge]}
         />
 
         <Modal

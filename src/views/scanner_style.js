@@ -53,5 +53,15 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 20,
     alignSelf: 'center',
     margin: 20
+  },
+  button: { marginTop: 8 },
+  buttonText: {
+    fontSize: 16,
+    color: '#ffffff',
+    fontWeight: 'normal',
+    fontFamily: FONT_NAME
+  },
+  buttonFontLarge: {
+    fontSize: 20
   }
 });

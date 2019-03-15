@@ -7,8 +7,6 @@ import { styles } from './getStarted2_style';
 
 const icon = require('../../images/logo.png');
 
-const FONT_NAME = 'AvenirNext-Regular';
-
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -40,7 +38,7 @@ export default class App extends Component {
           <Text style={styles.textContentAreaTitle}>
             Why are you choosing this app?
           </Text>
-          <View style={{ alignSelf: 'stretch' }}>
+          <View style={styles.stretch}>
             <CheckBox
               textStyle={styles.checkBoxStyle}
               title="I have diabetes"
@@ -69,21 +67,13 @@ export default class App extends Component {
         </View>
 
         <Button
-          buttonStyle={{
-            marginTop: 16,
-            paddingHorizontal: 40
-          }}
+          buttonStyle={styles.button}
           onPress={this.continue}
           rounded
           large
           backgroundColor="#85bf43"
           title="Continue"
-          textStyle={{
-            fontSize: 20,
-            color: '#ffffff',
-            fontWeight: 'normal',
-            fontFamily: FONT_NAME
-          }}
+          textStyle={styles.buttonText}
         />
       </View>
     );

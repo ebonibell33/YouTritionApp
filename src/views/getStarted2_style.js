@@ -38,5 +38,16 @@ export const styles = StyleSheet.create({
     color: '#333333',
     fontWeight: 'normal',
     fontFamily: FONT_NAME
-  }
+  },
+  button: {
+    marginTop: 16,
+    paddingHorizontal: 40
+  },
+  buttonText: {
+    fontSize: 20,
+    color: '#ffffff',
+    fontWeight: 'normal',
+    fontFamily: FONT_NAME
+  },
+  stretch: { alignSelf: 'stretch' }
 });

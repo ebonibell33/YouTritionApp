@@ -25,5 +25,16 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: FONT_NAME
   },
-  imageContentArea: { width: width - 50, height: width - 50, marginVertical: 8 }
+  imageContentArea: {
+    width: width - 50,
+    height: width - 50,
+    marginVertical: 8
+  },
+  button: { marginTop: 8 },
+  buttonText: {
+    fontSize: 20,
+    color: '#ffffff',
+    fontWeight: 'normal',
+    fontFamily: FONT_NAME
+  }
 });

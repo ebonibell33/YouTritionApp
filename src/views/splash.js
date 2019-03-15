@@ -27,7 +27,6 @@ export default class App extends Component {
 
   render() {
     const { gettingStarted } = this.state;
-    console.log('render', gettingStarted);
     if (gettingStarted === 1) {
       return <AppNavigator />;
     } else if (gettingStarted === 2) {

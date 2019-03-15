@@ -6,8 +6,6 @@ import { styles } from './getStarted_style';
 
 const icon = require('../../images/Logo-full.png');
 
-const FONT_NAME = 'AvenirNext-Regular';
-
 export default class App extends Component {
   render() {
     const { navigation } = this.props;
@@ -25,7 +23,7 @@ export default class App extends Component {
           </Text>
         </View>
         <Button
-          buttonStyle={{ marginTop: 8 }}
+          buttonStyle={styles.button}
           onPress={() => {
             navigation.push('GetStarted2');
           }}
@@ -33,12 +31,7 @@ export default class App extends Component {
           large
           backgroundColor="#85bf43"
           title="Let’s do this"
-          textStyle={{
-            fontSize: 20,
-            color: '#ffffff',
-            fontWeight: 'normal',
-            fontFamily: FONT_NAME
-          }}
+          textStyle={styles.buttonText}
         />
       </View>
     );
