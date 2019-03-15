@@ -1,25 +1,9 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React, { Component } from 'react';
-import {
-  Dimensions,
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  Modal,
-  Alert
-} from 'react-native';
+import { Text, View, Image, Modal, Alert } from 'react-native';
 import { Button } from 'react-native-elements';
 import { RNCamera } from 'react-native-camera';
-// import of from 'of';
 import { GET } from '../utils/functions';
+import { styles } from './scanner_style';
 
 const icon = require('../../images/logo.png');
 const loaderimage = require('../../images/loaderImage.png');
@@ -27,7 +11,6 @@ const unhealthyimage = require('../../images/unhealthyimage.png');
 const healthyimage = require('../../images/healthyimage.png');
 // const scnnerImage = require('../../images/scnnerImage.png');
 
-const { width } = Dimensions.get('window');
 const FONT_NAME = 'AvenirNext-Regular';
 
 export default class App extends Component {
@@ -375,57 +358,3 @@ export default class App extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  mainContainer: {
-    flex: 1,
-    flexDirection: 'column',
-    backgroundColor: 'white',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 8
-  },
-  sliderItemContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'column'
-  },
-  textContentAreaTitle: {
-    margin: 16,
-    fontSize: 16,
-    color: '#333333',
-    textAlign: 'center',
-    fontFamily: FONT_NAME
-  },
-  imageContentArea: {
-    width: width * 0.5,
-    height: width * 0.5,
-    marginVertical: 8,
-    marginBottom: 40
-  },
-  loaderimage: {
-    width: width * 0.8,
-    height: width * 0.8,
-    marginVertical: 8,
-    marginBottom: 40
-  },
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-    backgroundColor: 'black'
-  },
-  preview: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'center'
-  },
-  capture: {
-    flex: 0,
-    backgroundColor: '#fff',
-    borderRadius: 5,
-    padding: 15,
-    paddingHorizontal: 20,
-    alignSelf: 'center',
-    margin: 20
-  }
-});
