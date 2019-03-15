@@ -1,7 +1,7 @@
 /** @format */
 
-import { AppRegistry } from "react-native";
-import App from "./src/splash";
-import { name as appName } from "./app.json";
+import { AppRegistry } from 'react-native';
+import App from './src/views/splash';
+import { info } from './appInfo';
 
-AppRegistry.registerComponent(appName, () => App);
+AppRegistry.registerComponent(info.name, () => App);

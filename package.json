@@ -3,6 +3,14 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "lint": "esw webpack.config.* src tools --color",
+    "lint:watch": "npm run lint -- --watch",
+    "lint-fix": "yarn --silent lint --fix; ",
+    "lint-styles": "stylelint --ignore-path .eslintignore '**/*.*(css|scss)' --syntax scss",
+    "lint-styles-fix": "yarn --silent lint-styles --fix; ",
+    "postlint-fix": "prettier --ignore-path .eslintignore --single-quote --write '**/*.{*{js,jsx,json},babelrc,eslintrc,prettierrc,stylelintrc}'",
+    "postlint-styles-fix": "prettier --ignore-path .eslintignore --single-quote --write '**/*.{css,scss}'",
+    "precommit": "lint-staged",
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest"
   },
@@ -18,12 +26,69 @@
     "react-navigation": "^3.0.0"
   },
   "devDependencies": {
+    "@babel/cli": "7.0.0",
+    "@babel/core": "7.0.0",
+    "@babel/node": "7.0.0",
+    "@babel/plugin-proposal-class-properties": "7.0.0",
+    "@babel/plugin-transform-react-constant-elements": "7.0.0",
+    "@babel/polyfill": "7.0.0",
+    "@babel/preset-env": "7.0.0",
+    "@babel/preset-react": "7.0.0",
+    "autoprefixer": "9.1.3",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-eslint": "9.0.0",
     "babel-jest": "23.6.0",
+    "babel-loader": "8.0.0",
+    "babel-plugin-transform-react-remove-prop-types": "0.4.15",
+    "eslint": "^5.14.1",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^4.0.0",
+    "eslint-formatter-pretty": "^2.1.1",
+    "eslint-import-resolver-node": "^0.3.2",
+    "eslint-import-resolver-webpack": "^0.11.0",
+    "eslint-plugin-compat": "^2.7.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jest": "^22.3.0",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-react": "^7.12.4",
+    "eslint-plugin-testcafe": "^0.2.1",
+    "eslint-watch": "4.0.2",
+    "husky": "1.3.1",
     "jest": "23.6.0",
+    "lint-staged": "^8.1.5",
     "metro-react-native-babel-preset": "0.49.2",
-    "react-test-renderer": "16.6.1"
+    "prettier": "1.16.4",
+    "react-test-renderer": "16.6.1",
+    "stylelint": "9.10.1",
+    "stylelint-config-prettier": "5.0.0",
+    "stylelint-config-standard": "18.2.0"
   },
   "jest": {
     "preset": "react-native"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "prettier --ignore-path .eslintignore --single-quote --write",
+      "eslint --cache --format=pretty --fix",
+      "git add"
+    ],
+    "{*.json,.{babelrc,eslintrc,prettierrc,stylelintrc}}": [
+      "prettier --ignore-path .eslintignore --parser json --write",
+      "git add"
+    ],
+    "*.{css,scss}": [
+      "prettier --ignore-path .eslintignore --single-quote --write",
+      "git add"
+    ],
+    "*.{yml,md}": [
+      "prettier --ignore-path .eslintignore --single-quote --write",
+      "git add"
+    ]
   }
 }
