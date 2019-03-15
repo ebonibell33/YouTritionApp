@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Dimensions, StyleSheet, Text, View, Image } from 'react-native';
+import { Text, View, Image } from 'react-native';
 import { Button } from 'react-native-elements';
 // import { RNCamera, FaceDetector } from 'react-native-camera';
+import { styles } from './getStarted_style';
 
 const icon = require('../../images/Logo-full.png');
 
-const { width } = Dimensions.get('window');
 const FONT_NAME = 'AvenirNext-Regular';
 
 export default class App extends Component {
@@ -44,28 +44,3 @@ export default class App extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  mainContainer: {
-    flex: 1,
-    flexDirection: 'column',
-    backgroundColor: 'white',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 8
-  },
-  sliderItemContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'white',
-    flexDirection: 'column'
-  },
-  textContentAreaTitle: {
-    margin: 16,
-    fontSize: 16,
-    color: '#333333',
-    textAlign: 'center',
-    fontFamily: FONT_NAME
-  },
-  imageContentArea: { width: width - 50, height: width - 50, marginVertical: 8 }
-});
