@@ -1,4 +1,4 @@
 export const info = {
-  name: 'scanner',
-  displayName: 'scanner'
+  name: 'YouTrition',
+  displayName: 'YouTrition'
 };
