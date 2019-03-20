@@ -15,10 +15,12 @@
     "test": "jest"
   },
   "dependencies": {
+    "native-base": "^2.12.1",
     "of": "^1.0.0",
     "react": "16.6.1",
     "react-native": "0.57.5",
     "react-native-camera": "^1.4.1",
+    "react-native-drawer": "^2.5.1",
     "react-native-elements": "^0.19.1",
     "react-native-gesture-handler": "^1.0.9",
     "react-native-scan-barcode": "^3.1.5",

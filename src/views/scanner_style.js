@@ -1,6 +1,7 @@
 import { Dimensions, StyleSheet } from 'react-native';
 
 const { width } = Dimensions.get('window');
+
 const FONT_NAME = 'AvenirNext-Regular';
 export const styles = StyleSheet.create({
   mainContainer: {
@@ -63,5 +64,15 @@ export const styles = StyleSheet.create({
   },
   buttonFontLarge: {
     fontSize: 20
+  },
+  scanArea: {
+    alignSelf: 'center',
+    backgroundColor: 'rgba(0,0,0,0)',
+    borderWidth: 1,
+    borderColor: 'white',
+    height: width * 0.618,
+    marginTop: 15,
+    marginBottom: 15,
+    width: width * 0.926
   }
 });

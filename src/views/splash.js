@@ -3,11 +3,11 @@ import { View, Image } from 'react-native';
 import AppNavigator from './RootNavigation';
 import AppNavigator2 from './RootNavigation2';
 import { retrieveData } from '../utils/functions';
-import { styles } from './splash_style';
+import { styles } from './Splash_style';
 
 const icon = require('../../images/Logo-full.png');
 
-export default class App extends Component {
+export default class Splash extends Component {
   constructor(props) {
     super(props);
 
@@ -23,7 +23,7 @@ export default class App extends Component {
         } else {
           this.setState({ gettingStarted: 1 });
         }
-      }, 2000);
+      }, 500);
     });
   };
 

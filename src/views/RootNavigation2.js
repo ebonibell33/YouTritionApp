@@ -1,5 +1,5 @@
 import { createStackNavigator, createAppContainer } from 'react-navigation';
-import Scanner from './scanner';
+import Scanner from './Scanner';
 
 const AppNavigator = createStackNavigator(
   {

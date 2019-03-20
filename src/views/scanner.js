@@ -3,9 +3,8 @@ import { Text, View, Image, Modal, Alert } from 'react-native';
 import { Button } from 'react-native-elements';
 import { RNCamera } from 'react-native-camera';
 import { GET } from '../utils/functions';
-import { styles } from './scanner_style';
+import { styles } from './Scanner_style';
 
-const icon = require('../../images/logo.png');
 const loaderimage = require('../../images/loaderImage.png');
 const unhealthyimage = require('../../images/unhealthyimage.png');
 const healthyimage = require('../../images/healthyimage.png');
@@ -13,7 +12,7 @@ const healthyimage = require('../../images/healthyimage.png');
 
 const FONT_NAME = 'AvenirNext-Regular';
 
-export default class App extends Component {
+export default class Scanner extends Component {
   constructor(props) {
     super(props);
 
@@ -21,10 +20,16 @@ export default class App extends Component {
       // torchMode: 'off',
       // cameraType: 'back',
       barcode: '',
-      showCamera: false,
+      showCamera: true,
       loading: false,
       result: ''
     };
+  }
+
+  componentWillReceiveProps() {
+    setTimeout(() => {
+      this.setState({ showCamera: true });
+    }, 300);
   }
 
   barcodeReceived(e) {
@@ -84,8 +89,15 @@ export default class App extends Component {
     );
   }
 
+  onCancelCamera = () => {
+    const { navigation } = this.props;
+    this.setState({ showCamera: false });
+    navigation.goBack();
+  };
+
   renderCamera() {
     const { showCamera, barcode } = this.state;
+    console.log(barcode);
     return (
       <View style={styles.container}>
         <RNCamera
@@ -95,8 +107,8 @@ export default class App extends Component {
           style={styles.preview}
           type={RNCamera.Constants.Type.back}
           flashMode={RNCamera.Constants.FlashMode.on}
-          permissionDialogTitle="Permission to use camera"
-          permissionDialogMessage="We need your permission to use your camera phone"
+          permissionDialogTitle='"YouTrition" Would Like to Access the Camera'
+          permissionDialogMessage="You need to allow camera access to be able to scan UPC codes and use food recognition."
           onBarCodeRead={barcodes => {
             console.log(barcodes);
             if (showCamera) {
@@ -124,87 +136,82 @@ export default class App extends Component {
         >
           <View
             style={{
-              flex: 1,
-              alignSelf: 'stretch',
-              backgroundColor: '#000',
-              opacity: 0.5
-            }}
-          />
-          <View style={{ flex: 1, alignSelf: 'stretch' }} />
-
-          <View
-            style={{
-              flex: 1,
-              alignSelf: 'stretch',
-              justifyContent: 'center',
+              alignSelf: 'center',
               alignItems: 'center',
-              paddingBottom: 32,
-              flexDirection: 'column',
-              backgroundColor: 'rgba(0,0,0,0.5)'
+              justifyContent: 'center',
+              flex: 1
             }}
           >
-            <Text
-              style={{
-                fontSize: 24,
-                fontWeight: 'normal',
-                fontFamily: FONT_NAME,
-                color: 'white',
-                marginBottom: 20
-              }}
-            >
-              {barcode ? 'Barcode Detected' : 'Scan Barcode'}
-            </Text>
-            {barcode.length > 0 && (
-              <Text
-                style={{
-                  fontSize: 20,
-                  color: 'white',
-                  margin: 8,
-                  marginBottom: 16,
-                  fontWeight: 'bold'
-                }}
-              >
-                {barcode}
-              </Text>
-            )}
-
             <View
               style={{
-                flex: 0,
-                flexDirection: 'row',
+                alignSelf: 'center',
                 justifyContent: 'center',
                 alignItems: 'center',
-                paddingBottom: 8
+                flexDirection: 'column',
+                backgroundColor: 'rgba(0,0,0,0)'
               }}
             >
+              <Text
+                style={{
+                  fontSize: 24,
+                  fontWeight: 'normal',
+                  fontFamily: FONT_NAME,
+                  color: 'white'
+                }}
+              >
+                {barcode ? 'Barcode Detected' : 'Position Barcode Here'}
+              </Text>
+              <View style={styles.scanArea} />
               {barcode.length > 0 && (
-                <Button
-                  onPress={() => {
-                    this.setState({ showCamera: false }, () => {
-                      this.fetchData();
-                    });
-                  }}
-                  rounded
-                  backgroundColor="#85bf43"
-                  title="CONTINUE"
-                  textStyle={{
+                <Text
+                  style={{
                     fontSize: 20,
-                    color: '#ffffff',
-                    fontWeight: 'normal',
-                    fontFamily: FONT_NAME
+                    color: 'white',
+                    margin: 8,
+                    marginBottom: 16,
+                    fontWeight: 'bold'
                   }}
-                />
+                >
+                  {barcode}
+                </Text>
               )}
 
-              <Button
-                onPress={() => {
-                  this.setState({ showCamera: false });
+              <View
+                style={{
+                  flex: 0,
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  paddingBottom: 8
                 }}
-                rounded
-                large
-                title="CANCEL"
-                textStyle={[styles.buttonText, styles.buttonFontLarge]}
-              />
+              >
+                {barcode.length > 0 && (
+                  <Button
+                    onPress={() => {
+                      this.setState({ showCamera: false }, () => {
+                        this.fetchData();
+                      });
+                    }}
+                    rounded
+                    backgroundColor="#85bf43"
+                    title="CONTINUE"
+                    textStyle={{
+                      fontSize: 20,
+                      color: '#ffffff',
+                      fontWeight: 'normal',
+                      fontFamily: FONT_NAME
+                    }}
+                  />
+                )}
+
+                <Button
+                  onPress={this.onCancelCamera}
+                  rounded
+                  large
+                  title="CANCEL"
+                  textStyle={[styles.buttonText, styles.buttonFontLarge]}
+                />
+              </View>
             </View>
           </View>
         </View>
@@ -298,6 +305,7 @@ export default class App extends Component {
 
   render() {
     const { loading, result, showCamera } = this.state;
+    console.log('state', this.state);
     if (loading) {
       return this.renderLoader();
     }
@@ -306,29 +314,6 @@ export default class App extends Component {
     }
     return (
       <View style={styles.mainContainer}>
-        <View style={styles.sliderItemContainer}>
-          <Image
-            source={icon}
-            style={styles.imageContentArea}
-            resizeMode="contain"
-          />
-          <Text style={styles.textContentAreaTitle}>
-            Take a photo and choose a photo of ingredients
-          </Text>
-        </View>
-        <Button
-          buttonStyle={styles.button}
-          onPress={() => {
-            // this.fetchData();
-            this.setState({ showCamera: true, barcode: '' });
-          }}
-          rounded
-          large
-          backgroundColor="#85bf43"
-          title="Take a photo"
-          textStyle={[styles.buttonText, styles.buttonFontLarge]}
-        />
-
         <Modal
           animationType="slide"
           transparent={false}
