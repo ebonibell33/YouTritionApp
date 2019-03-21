@@ -54,7 +54,7 @@ export default class Scanner extends Component {
   }
 
   renderResult() {
-    const { result } = this.statel;
+    const { result } = this.state;
     const { healthy, message } = result;
 
     const mainstyle = {

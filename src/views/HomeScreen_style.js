@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
     shadowOffset: { width: 2, height: 3 },
     shadowOpacity: 1,
     shadowRadius: 0,
-    width: width * 0.8
+    width: width * 0.92
   },
   scanHeader: {
     color: '#707174',
@@ -68,7 +68,7 @@ export const styles = StyleSheet.create({
   suggestImage: {
     alignSelf: 'center',
     display: 'flex',
-    width: width * 0.9,
+    width: width * 0.92,
     height: width * 0.4
   },
   drawerStyles: {}

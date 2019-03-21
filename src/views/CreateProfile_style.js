@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
     shadowOffset: { width: 2, height: 3 },
     shadowOpacity: 1,
     shadowRadius: 0,
-    width: width * 0.8
+    width: width * 0.92
   },
   profileHeader: {
     color: '#707174',
@@ -82,7 +82,7 @@ export const styles = StyleSheet.create({
     shadowOffset: { width: 2, height: 3 },
     shadowOpacity: 1,
     shadowRadius: 0,
-    width: width * 0.8
+    width: width * 0.92
   },
   suggestTitle: {
     color: '#707174',

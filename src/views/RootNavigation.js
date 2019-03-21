@@ -8,6 +8,8 @@ import StartScreen from './StartScreen';
 import GetStarted from './getStarted';
 import GetStarted2 from './getStarted2';
 import Scanner from './Scanner';
+import ProductOverview from './ProductOverview';
+import RecommendedProduct from './RecommendedProduct';
 
 const AppNavigator = createStackNavigator(
   {
@@ -19,7 +21,9 @@ const AppNavigator = createStackNavigator(
     GenderProfile,
     GetStarted,
     GetStarted2,
-    Scanner
+    Scanner,
+    ProductOverview,
+    RecommendedProduct
   },
   {
     headerMode: 'none'
