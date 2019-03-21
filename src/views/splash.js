@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Image } from 'react-native';
 import AppNavigator from './RootNavigation';
-import AppNavigator2 from './RootNavigation2';
+// import AppNavigator2 from './RootNavigation2';
 import { retrieveData } from '../utils/functions';
 import { styles } from './Splash_style';
 
@@ -33,7 +33,7 @@ export default class Splash extends Component {
     if (gettingStarted === 1) {
       return <AppNavigator />;
     } else if (gettingStarted === 2) {
-      return <AppNavigator2 />;
+      return <AppNavigator />;
     }
     return (
       <View style={styles.mainContainer}>

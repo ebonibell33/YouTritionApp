@@ -9,11 +9,51 @@ import {
 import Drawer from 'react-native-drawer';
 import CustomHeader from '../component/CustomHeader';
 import SideMenu from '../component/SideMenu';
-import { styles } from './GenderProfile_style';
+import { styles } from './ConditionProfile_style';
 
 const background = require('../../images/homeBackground.png');
 
-class GenderProfile extends Component {
+const backgroundColors = ['#f59331', '#1daeec', '#8fc449'];
+const buttons = [
+  {
+    title: 'Weight Control',
+    style: 1
+  },
+  {
+    title: 'Gluten Intolerance',
+    style: 2
+  },
+  {
+    title: 'Vegan',
+    style: 3
+  },
+  {
+    title: 'Type 2 Diabetes',
+    style: 3
+  },
+  {
+    title: 'Pre-diabetes',
+    style: 2
+  },
+  {
+    title: 'High Blood Pressure',
+    style: 1
+  },
+  {
+    title: 'Vegetarian',
+    style: 2
+  },
+  {
+    title: 'Lactose Intolderance',
+    style: 1
+  },
+  {
+    title: 'General Health',
+    style: 3
+  }
+];
+
+class ConditionProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -22,13 +62,14 @@ class GenderProfile extends Component {
   }
 
   onButton = id => {
-    const { navigation } = this.props;
+    // const { navigation } = this.props;
     console.log('id', id);
-    if (id === 0) {
-      navigation.push('ConditionProfile');
-    } else {
-      navigation.push('ConditionProfile');
-    }
+    // if (id === 0) {
+    //   navigation.push('SignIn');
+    // }
+    // else {
+    //   navigation.push('SignUp');
+    // }
   };
 
   onViewAll = () => {
@@ -68,23 +109,26 @@ class GenderProfile extends Component {
           <CustomHeader onMenu={this.onMenu} showBack={false} />
           <ScrollView>
             <View style={styles.profileContainer}>
-              <Text style={styles.profileHeader}>I am ...</Text>
+              <Text style={styles.profileHeader}>
+                My diet and health concerns are...
+              </Text>
               <Text style={styles.profileDescription} numberOfLines={2}>
-                Click on your gender.
+                Click on all those that apply to you.
               </Text>
               <View style={styles.buttonContainer}>
-                <TouchableOpacity
-                  style={styles.button1}
-                  onPress={() => this.onButton(0)}
-                >
-                  <Text style={styles.buttonText}>Female</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.button2}
-                  onPress={() => this.onButton(1)}
-                >
-                  <Text style={styles.buttonText}>Male</Text>
-                </TouchableOpacity>
+                {buttons.map((each, index) => (
+                  <TouchableOpacity
+                    key={each.title}
+                    style={[
+                      styles.button,
+                      { backgroundColor: backgroundColors[each.style - 1] },
+                      index % 3 === 1 && styles.buttonBelow
+                    ]}
+                    onPress={() => this.onButton(index)}
+                  >
+                    <Text style={styles.buttonText}>{each.title}</Text>
+                  </TouchableOpacity>
+                ))}
               </View>
             </View>
           </ScrollView>
@@ -94,4 +138,4 @@ class GenderProfile extends Component {
   }
 }
 
-export default GenderProfile;
+export default ConditionProfile;

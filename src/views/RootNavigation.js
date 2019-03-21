@@ -4,6 +4,7 @@ import CreateProfile from './CreateProfile';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
 import GenderProfile from './GenderProfile';
+import ConditionProfile from './ConditionProfile';
 import StartScreen from './StartScreen';
 import GetStarted from './getStarted';
 import GetStarted2 from './getStarted2';
@@ -19,6 +20,7 @@ const AppNavigator = createStackNavigator(
     SignUp,
     StartScreen,
     GenderProfile,
+    ConditionProfile,
     GetStarted,
     GetStarted2,
     Scanner,
