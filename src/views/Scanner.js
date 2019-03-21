@@ -76,9 +76,7 @@ export default class Scanner extends Component {
         </View>
         <Button
           buttonStyle={styles.button}
-          onPress={() => {
-            this.setState({ showCamera: false, loading: false, result: null });
-          }}
+          onPress={this.checkAnotherProduct}
           rounded
           large
           backgroundColor={!healthy ? '#85bf43' : '#eb8c30'}
@@ -92,6 +90,12 @@ export default class Scanner extends Component {
   onCancelCamera = () => {
     const { navigation } = this.props;
     this.setState({ showCamera: false });
+    navigation.goBack();
+  };
+
+  checkAnotherProduct = () => {
+    const { navigation } = this.props;
+    this.setState({ showCamera: false, loading: false, result: null });
     navigation.goBack();
   };
 

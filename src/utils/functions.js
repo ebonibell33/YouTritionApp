@@ -2,13 +2,11 @@ import { AsyncStorage } from 'react-native';
 
 export const retrieveData = (key, callBack) => {
   AsyncStorage.getItem(key, (error, result) => {
-    console.log(result);
+    // console.log(result);
 
     if (error) {
-      console.log(error);
       callBack(null, error);
     } else {
-      console.log(result);
       callBack(result, null);
     }
   });
@@ -26,8 +24,6 @@ export const REQUEST = (method, url, headers, params, callback) => {
   let realUrl = url;
 
   let body = '';
-
-  console.log(params);
 
   Object.keys(params).forEach(function(key) {
     if (body.length > 0) {
@@ -57,15 +53,15 @@ export const REQUEST = (method, url, headers, params, callback) => {
   fetch(realUrl, options)
     .then(response => response.json())
     .then(responseJson => {
-      console.log(realUrl);
-      console.log(options);
-      console.log(responseJson);
+      // console.log(realUrl);
+      // console.log(options);
+      // console.log(responseJson);
       return callback(null, responseJson);
     })
     .catch(error => {
-      console.log(realUrl);
-      console.log(options);
-      console.log(error);
+      // console.log(realUrl);
+      // console.log(options);
+      // console.log(error);
       callback(error, null);
     });
 };

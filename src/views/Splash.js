@@ -29,7 +29,6 @@ export default class Splash extends Component {
 
   render() {
     const { gettingStarted } = this.state;
-    console.log('gettingStarted', gettingStarted);
     if (gettingStarted === 1) {
       return <AppNavigator />;
     } else if (gettingStarted === 2) {

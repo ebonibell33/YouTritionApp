@@ -9,7 +9,6 @@ const icon = require('../../images/Logo-full.png');
 export default class App extends Component {
   render() {
     const { navigation } = this.props;
-    console.log('navigation', navigation);
     return (
       <View style={styles.mainContainer}>
         <View style={styles.sliderItemContainer}>

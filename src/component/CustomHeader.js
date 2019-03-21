@@ -17,7 +17,6 @@ class CustomHeader extends Component {
 
   onBack = () => {
     const { navigation } = this.props;
-    console.log('navigationBack', navigation);
     navigation.goBack();
   };
 

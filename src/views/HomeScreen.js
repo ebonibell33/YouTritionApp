@@ -24,7 +24,6 @@ class HomeScreen extends Component {
   }
 
   componentDidMount() {
-    console.log('componentDidMount');
     this.setState({ drawerOpen: null });
   }
 

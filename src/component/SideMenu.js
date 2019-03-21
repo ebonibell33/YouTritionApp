@@ -17,7 +17,6 @@ const menuIcons = [
 class SideMenu extends Component {
   onMenu = id => {
     const { navigation, onClose } = this.props;
-    console.log(navigation, id);
     if (id === 0) {
       navigation.push('CreateProfile');
     } else if (id === 1) {
