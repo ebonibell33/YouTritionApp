@@ -31,16 +31,16 @@ export const styles = StyleSheet.create({
   profileDescription: {
     color: '#707174',
     fontSize: 14,
-    // fontFamily: 'Avenir',
+    fontFamily: 'Avenir',
     marginTop: width * 0.07
   },
   buttonContainer: {
     flexDirection: 'column',
     flexWrap: 'wrap',
-    height: width * 0.9,
+    height: width * 1.2,
     justifyContent: 'space-between',
     marginTop: width * 0.115,
-    marginBottom: width * 0.3,
+    marginBottom: width * 0.115,
     width: '100%'
   },
   button: {
@@ -56,10 +56,14 @@ export const styles = StyleSheet.create({
     top: width * 0.15
     // marginTop: width * 0.0675,
   },
+  hideButton: {
+    opacity: 0
+  },
   buttonText: {
     alignSelf: 'center',
     color: '#fffefc',
-    fontSize: 14,
+    fontSize: 18,
+    fontFamily: 'Avenir',
     textAlign: 'center'
   }
 });

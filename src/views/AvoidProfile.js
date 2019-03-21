@@ -9,51 +9,64 @@ import {
 import Drawer from 'react-native-drawer';
 import CustomHeader from '../component/CustomHeader';
 import SideMenu from '../component/SideMenu';
-import { styles } from './ConditionProfile_style';
+import { styles } from './AvoidProfile_style';
 
 const background = require('../../images/homeBackground.png');
 
-const backgroundColors = ['#f59331', '#1daeec', '#8fc449'];
+// green: 3, blue: 2, other: 1
+const backgroundColors = ['#f59331', '#1daeec', '#8fc449', 'rgba(0,0,0,0)'];
 const buttons = [
   {
-    title: 'Weight Control',
-    style: 1
-  },
-  {
-    title: 'Type 2 Diabetes',
+    title: 'None',
     style: 3
   },
   {
-    title: 'Vegetarian',
+    title: 'Gluten',
     style: 2
   },
   {
-    title: 'Gluten Intolerance',
-    style: 2
-  },
-  {
-    title: 'Pre-diabetes',
-    style: 2
-  },
-  {
-    title: 'Lactose Intolderance',
+    title: 'Fish',
     style: 1
   },
   {
-    title: 'Vegan',
+    title: 'Dairy',
+    style: 2
+  },
+  {
+    title: 'Milk',
     style: 3
   },
   {
-    title: 'High Blood Pressure',
+    title: 'Poultry',
+    style: 2
+  },
+  {
+    title: 'Meet',
     style: 1
   },
   {
-    title: 'General Health',
+    title: 'None-None',
+    style: 4
+  },
+  {
+    title: 'Eggs',
+    style: 2
+  },
+  {
+    title: 'Peanuts',
+    style: 1
+  },
+  {
+    title: 'Soy',
+    style: 3
+  },
+  {
+    title: 'Wheat',
     style: 3
   }
 ];
 
-class ConditionProfile extends Component {
+class AvoidProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -62,9 +75,14 @@ class ConditionProfile extends Component {
   }
 
   onButton = id => {
-    const { navigation } = this.props;
+    // const { navigation } = this.props;
     console.log('id', id);
-    navigation.push('AvoidProfile');
+    // if (id === 0) {
+    //   navigation.push('SignIn');
+    // }
+    // else {
+    //   navigation.push('SignUp');
+    // }
   };
 
   onViewAll = () => {
@@ -104,11 +122,9 @@ class ConditionProfile extends Component {
           <CustomHeader onMenu={this.onMenu} showBack={false} />
           <ScrollView>
             <View style={styles.profileContainer}>
-              <Text style={styles.profileHeader}>
-                My diet and health {'\n'}concerns are...
-              </Text>
+              <Text style={styles.profileHeader}>I want to avoid...</Text>
               <Text style={styles.profileDescription} numberOfLines={2}>
-                Click on all those that apply to you.
+                Click on all the food that you want to avoid.
               </Text>
               <View style={styles.buttonContainer}>
                 {buttons.map((each, index) => (
@@ -117,7 +133,8 @@ class ConditionProfile extends Component {
                     style={[
                       styles.button,
                       { backgroundColor: backgroundColors[each.style - 1] },
-                      index >= 3 && index <= 5 && styles.buttonBelow
+                      index >= 4 && index <= 7 && styles.buttonBelow,
+                      index === 7 && styles.hideButton
                     ]}
                     onPress={() => this.onButton(index)}
                   >
@@ -133,4 +150,4 @@ class ConditionProfile extends Component {
   }
 }
 
-export default ConditionProfile;
+export default AvoidProfile;
