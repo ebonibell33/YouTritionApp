@@ -108,6 +108,11 @@ export default class Scanner extends Component {
           ref={ref => {
             this.camera = ref;
           }}
+          barcodeFinderWidth={280}
+          barcodeFinderHeight={220}
+          barcodeFinderVisible
+          barcodeFinderBorderColor="red"
+          barcodeFinderBorderWidth={3}
           style={styles.preview}
           type={RNCamera.Constants.Type.back}
           flashMode={RNCamera.Constants.FlashMode.on}
