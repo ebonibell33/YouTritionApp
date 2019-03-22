@@ -20,8 +20,16 @@ class CustomHeader extends Component {
     navigation.goBack();
   };
 
+  onMenuPress = () => {
+    const { onMenu } = this.props;
+    this.setState({ badge: 0 });
+    if (onMenu) {
+      onMenu();
+    }
+  };
+
   render() {
-    const { onMenu, showBack, showMenu } = this.props;
+    const { showBack, showMenu } = this.props;
     const { badge } = this.state;
     return (
       <Header style={styles.header}>
@@ -48,16 +56,21 @@ class CustomHeader extends Component {
         </Body>
         <Right>
           {showMenu !== false && (
-            <TouchableOpacity onPress={onMenu} style={styles.menuTouchable}>
+            <TouchableOpacity
+              onPress={this.onMenuPress}
+              style={styles.menuTouchable}
+            >
               <View style={styles.menuContainer}>
                 <Image
                   source={headerMenu}
                   resizeMode="contain"
                   style={styles.headerMenu}
                 />
-                <View style={styles.headerBadgeImage}>
-                  <Text style={styles.badgeText}>{badge}</Text>
-                </View>
+                {badge > 0 && (
+                  <View style={styles.headerBadgeImage}>
+                    <Text style={styles.badgeText}>{badge}</Text>
+                  </View>
+                )}
               </View>
             </TouchableOpacity>
           )}

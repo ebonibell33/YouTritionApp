@@ -53,7 +53,7 @@ export const styles = StyleSheet.create({
   },
   buttonBelow: {
     position: 'relative',
-    top: width * 0.15
+    top: width * 0.16
     // marginTop: width * 0.0675,
   },
   hideButton: {

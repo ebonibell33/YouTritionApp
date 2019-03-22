@@ -32,6 +32,10 @@ class CreateProfile extends Component {
     this.setState({ drawerOpen: true });
   };
 
+  onCloseMenu = () => {
+    this.setState({ drawerOpen: false });
+  };
+
   render() {
     const { navigation } = this.props;
     const { drawerOpen } = this.state;

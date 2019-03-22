@@ -28,13 +28,19 @@ class StartScreen extends Component {
     this.setState({ drawerOpen: true });
   };
 
+  onCloseMenu = () => {
+    this.setState({ drawerOpen: false });
+  };
+
   render() {
     const { navigation } = this.props;
     const { drawerOpen } = this.state;
     return (
       <Drawer
         open={drawerOpen}
-        content={<SideMenu navigation={navigation} />}
+        content={
+          <SideMenu navigation={navigation} onClose={this.onCloseMenu} />
+        }
         type="static"
         side="right"
         tapToClose
