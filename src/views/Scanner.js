@@ -1,9 +1,19 @@
 import React, { Component } from 'react';
-import { Text, View, Image, Modal, Alert } from 'react-native';
+import {
+  Text,
+  View,
+  Image,
+  Modal,
+  // Alert,
+  ScrollView,
+  Dimensions
+} from 'react-native';
 import { Button } from 'react-native-elements';
 import { RNCamera } from 'react-native-camera';
 import { GET } from '../utils/functions';
 import { styles } from './Scanner_style';
+
+const { width } = Dimensions.get('window');
 
 const loaderimage = require('../../images/loaderImage.png');
 const unhealthyimage = require('../../images/unhealthyimage.png');
@@ -33,8 +43,7 @@ export default class Scanner extends Component {
   }
 
   barcodeReceived(e) {
-    console.log(`Barcode: ${e.data}`);
-    console.log(`Type: ${e.type}`);
+    console.log(`Barcode---Type: `, e);
   }
 
   renderLoader() {
@@ -55,7 +64,7 @@ export default class Scanner extends Component {
 
   renderResult() {
     const { result } = this.state;
-    const { healthy, message } = result;
+    const { healthy, message, ingredients } = result;
 
     const mainstyle = {
       ...styles.mainContainer,
@@ -66,23 +75,31 @@ export default class Scanner extends Component {
 
     return (
       <View style={mainstyle}>
-        <View style={styles.sliderItemContainer}>
-          <Image
-            source={image}
-            style={styles.loaderimage}
-            resizeMode="contain"
+        <ScrollView>
+          <View style={styles.sliderItemContainer}>
+            <Image
+              source={image}
+              style={styles.loaderimage}
+              resizeMode="contain"
+            />
+            <Text style={textstyle}>{message}</Text>
+            <Text style={[textstyle, { textAlign: 'left' }]}>
+              <Text style={[textstyle, { fontWeight: '600' }]}>
+                Ingredients:&nbsp;
+              </Text>
+              {ingredients}
+            </Text>
+          </View>
+          <Button
+            buttonStyle={styles.button}
+            onPress={this.checkAnotherProduct}
+            rounded
+            large
+            backgroundColor={!healthy ? '#85bf43' : '#eb8c30'}
+            title="Check Another Product"
+            textStyle={styles.buttonText}
           />
-          <Text style={textstyle}>{message}</Text>
-        </View>
-        <Button
-          buttonStyle={styles.button}
-          onPress={this.checkAnotherProduct}
-          rounded
-          large
-          backgroundColor={!healthy ? '#85bf43' : '#eb8c30'}
-          title="Check Another Product"
-          textStyle={styles.buttonText}
-        />
+        </ScrollView>
       </View>
     );
   }
@@ -101,15 +118,14 @@ export default class Scanner extends Component {
 
   renderCamera() {
     const { showCamera, barcode } = this.state;
-    console.log(barcode);
     return (
       <View style={styles.container}>
         <RNCamera
           ref={ref => {
             this.camera = ref;
           }}
-          barcodeFinderWidth={280}
-          barcodeFinderHeight={220}
+          barcodeFinderWidth={width * 0.926}
+          barcodeFinderHeight={width * 0.618}
           barcodeFinderVisible
           barcodeFinderBorderColor="red"
           barcodeFinderBorderWidth={3}
@@ -119,7 +135,6 @@ export default class Scanner extends Component {
           permissionDialogTitle='"YouTrition" Would Like to Access the Camera'
           permissionDialogMessage="You need to allow camera access to be able to scan UPC codes and use food recognition."
           onBarCodeRead={barcodes => {
-            console.log(barcodes);
             if (showCamera) {
               this.setState(
                 { barcode: barcodes.data, showCamera: false },
@@ -130,7 +145,7 @@ export default class Scanner extends Component {
             }
           }}
           onGoogleVisionBarcodesDetected={({ barcodes }) => {
-            console.log(barcodes);
+            console.log('===onGoogleVisionBarcodesDetected===', barcodes);
           }}
         />
 
@@ -197,9 +212,12 @@ export default class Scanner extends Component {
                 {barcode.length > 0 && (
                   <Button
                     onPress={() => {
-                      this.setState({ showCamera: false }, () => {
-                        this.fetchData();
-                      });
+                      this.setState(
+                        { barcode: '', loading: false, result: '' },
+                        () => {
+                          // this.fetchData();
+                        }
+                      );
                     }}
                     rounded
                     backgroundColor="#85bf43"
@@ -232,21 +250,25 @@ export default class Scanner extends Component {
     this.setState({ loading: true });
     this.fetchIngredeants((food, error) => {
       if (food) {
-        this.fetchResult(food.foodContentsLabel, (result, err, healthy) => {
-          if (result) {
-            this.setState({
-              loading: false,
-              result: { healthy, message: result }
-            });
-          } else {
-            this.setState({ loading: false });
-            setTimeout(() => {
-              alert(err.message);
-            }, 500);
+        this.fetchResult(
+          food.foodContentsLabel,
+          (result, err, ingredients, healthy) => {
+            if (result) {
+              this.setState({
+                loading: false,
+                result: { healthy, message: result, ingredients }
+              });
+            } else {
+              this.setState({ loading: false, showCamera: true });
+              setTimeout(() => {
+                alert(err.message);
+                this.setState({ barcode: '' });
+              }, 500);
+            }
           }
-        });
+        );
       } else {
-        this.setState({ loading: false });
+        this.setState({ loading: false, showCamera: true });
         setTimeout(() => {
           alert(error.message);
         }, 500);
@@ -274,7 +296,6 @@ export default class Scanner extends Component {
             // const { label, foodContentsLabel } = food;
             fnc(food, error);
           } else {
-            // console.log(`Error ${response}`);
             fnc(null, response);
           }
         } else {
@@ -301,12 +322,12 @@ export default class Scanner extends Component {
           if (data.length > 0) {
             const result = data[0];
             const { bad_reason: badReason } = result.attributes;
-            fnc(badReason, error, false);
+            fnc(badReason, error, ingredients, false);
           } else {
-            fnc(message, error, true);
+            fnc(message, error, ingredients, true);
           }
         } else {
-          fnc(null, error, true);
+          fnc(null, error, ingredients, true);
         }
       }
     );
@@ -314,7 +335,7 @@ export default class Scanner extends Component {
 
   render() {
     const { loading, result, showCamera } = this.state;
-    console.log('state', this.state);
+    console.log('====state====', this.state);
     if (loading) {
       return this.renderLoader();
     }
@@ -328,7 +349,7 @@ export default class Scanner extends Component {
           transparent={false}
           visible={showCamera}
           onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
+            // Alert.alert('Modal has been closed.');
           }}
         >
           {this.renderCamera()}
