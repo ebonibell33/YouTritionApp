@@ -31,6 +31,8 @@ export const styles = StyleSheet.create({
   },
   headerMenuIcon: {
     height: 20,
+    position: 'relative',
+    top: 3,
     width: 20
   },
   headerMenuText: {
