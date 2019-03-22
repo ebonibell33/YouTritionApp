@@ -306,7 +306,9 @@ export default class Scanner extends Component {
   };
 
   fetchResult = (ingredients, fnc) => {
-    const url = `http://13.232.170.63/ing_app/public/api/v1/ingredients`;
+    // const url = `http://13.232.170.63/ing_app/public/api/v1/ingredients`;
+    // const url = `http://192.168.0.62:8000/api/v1/ingredients`;
+    const url = `https://63ec3f39.ngrok.io/api/v1/ingredients`;
     GET(
       url,
       {},
