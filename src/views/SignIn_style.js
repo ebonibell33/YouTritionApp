@@ -61,7 +61,7 @@ export const styles = StyleSheet.create({
   eyeIconContainer: {
     height: 20,
     position: 'absolute',
-    top: 5,
+    top: 7,
     right: 5,
     width: 20
   },
