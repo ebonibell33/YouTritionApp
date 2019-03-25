@@ -6,10 +6,11 @@ const { width } = Dimensions.get('window');
 export const styles = StyleSheet.create({
   header: {
     backgroundColor: '#FFF',
-    // borderBottomWidth: 0,
-    marginTop: 25
+    height: 85,
+    paddingTop: 25
   },
   headerLogo: {
+    alignSelf: 'center',
     height: width * 0.085,
     width: '100%'
   },
@@ -48,7 +49,7 @@ export const styles = StyleSheet.create({
     marginTop: 10
   },
   menuTouchable: {
-    marginRight: 10,
+    marginRight: 0,
     marginTop: 10
   }
 });

@@ -20,30 +20,40 @@ const unhealthyimage = require('../../images/unhealthyimage.png');
 const healthyimage = require('../../images/healthyimage.png');
 // const scnnerImage = require('../../images/scnnerImage.png');
 
-const FONT_NAME = 'AvenirNext-Regular';
+// const FONT_NAME = 'AvenirNext-Regular';
+const FONT_NAME = 'Avenir';
 
 export default class Scanner extends Component {
   constructor(props) {
     super(props);
 
+    const { navigation } = props;
     this.state = {
       // torchMode: 'off',
       // cameraType: 'back',
       barcode: '',
-      showCamera: true,
+      showCamera: false,
       loading: false,
       result: ''
     };
-  }
 
-  componentWillReceiveProps() {
-    setTimeout(() => {
+    navigation.addListener('willFocus', () => {
+      // payload
       this.setState({ showCamera: true });
-    }, 300);
+    });
   }
 
-  barcodeReceived(e) {
-    console.log(`Barcode---Type: `, e);
+  componentDidMount() {
+    this.showCamera();
+  }
+
+  showCamera() {
+    this.setState({ showCamera: true });
+  }
+
+  barcodeReceived() {
+    // e
+    // console.log(`Barcode---Type: `, e);
   }
 
   renderLoader() {
@@ -247,6 +257,7 @@ export default class Scanner extends Component {
   }
 
   fetchData = () => {
+    const { navigation } = this.props;
     this.setState({ loading: true });
     this.fetchIngredeants((food, error) => {
       if (food) {
@@ -254,10 +265,19 @@ export default class Scanner extends Component {
           food.foodContentsLabel,
           (result, err, ingredients, healthy) => {
             if (result) {
-              this.setState({
-                loading: false,
-                result: { healthy, message: result, ingredients }
+              console.log('===detected===', food);
+              navigation.push('ProductOverview', {
+                healthy,
+                message: result,
+                food
               });
+              setTimeout(() => {
+                this.setState({
+                  loading: false,
+                  barcode: ''
+                  // showCamera: true,
+                });
+              }, 500);
             } else {
               this.setState({ loading: false, showCamera: true });
               setTimeout(() => {
@@ -308,7 +328,7 @@ export default class Scanner extends Component {
   fetchResult = (ingredients, fnc) => {
     // const url = `http://13.232.170.63/ing_app/public/api/v1/ingredients`;
     // const url = `http://192.168.0.62:8000/api/v1/ingredients`;
-    const url = `https://63ec3f39.ngrok.io/api/v1/ingredients`;
+    const url = `http://8737a57d.ngrok.io/api/v1/ingredients`;
     GET(
       url,
       {},
@@ -336,14 +356,14 @@ export default class Scanner extends Component {
   };
 
   render() {
-    const { loading, result, showCamera } = this.state;
-    console.log('====state====', this.state);
+    const { loading, showCamera } = this.state;
+    // console.log('====state====', this.state);
     if (loading) {
       return this.renderLoader();
     }
-    if (result) {
-      return this.renderResult();
-    }
+    // if (result) {
+    //   return this.renderResult();
+    // }
     return (
       <View style={styles.mainContainer}>
         <Modal

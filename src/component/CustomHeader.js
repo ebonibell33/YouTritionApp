@@ -17,7 +17,7 @@ class CustomHeader extends Component {
 
   onBack = () => {
     const { navigation } = this.props;
-    navigation.goBack();
+    navigation.pop();
   };
 
   onMenuPress = () => {
@@ -33,7 +33,7 @@ class CustomHeader extends Component {
     const { badge } = this.state;
     return (
       <Header style={styles.header}>
-        <Left>
+        <Left style={{ flex: 1 }}>
           {showBack !== false && (
             <TouchableOpacity
               onPress={this.onBack}
@@ -47,14 +47,14 @@ class CustomHeader extends Component {
             </TouchableOpacity>
           )}
         </Left>
-        <Body>
+        <Body style={{ flex: 2 }}>
           <Image
             source={headerLogo}
             resizeMode="contain"
             style={styles.headerLogo}
           />
         </Body>
-        <Right>
+        <Right style={{ flex: 1 }}>
           {showMenu !== false && (
             <TouchableOpacity
               onPress={this.onMenuPress}

@@ -14,7 +14,7 @@ import SideMenu from '../component/SideMenu';
 import { styles } from './ProductOverview_style';
 
 const background = require('../../images/productBackground.png');
-const main = require('../../images/productMain.png');
+// const main = require('../../images/productMain.png');
 const suggest1 = require('../../images/productSuggest1.png');
 const suggest2 = require('../../images/productSuggest2.png');
 const moodIcon = require('../../images/noMoodIcon.png');
@@ -22,11 +22,13 @@ const moodIcon = require('../../images/noMoodIcon.png');
 class ProductOverview extends Component {
   constructor(props) {
     super(props);
-    this.state = { drawerOpen: null };
+    this.state = {
+      drawerOpen: null,
+      showMore: false
+    };
   }
 
   componentDidMount() {
-    console.log('componentDidMount');
     this.setState({ drawerOpen: null });
   }
 
@@ -38,11 +40,18 @@ class ProductOverview extends Component {
     this.setState({ drawerOpen: false });
   };
 
-  onReadmore = () => {};
+  onReadmore = () => {
+    this.setState({ showMore: true });
+  };
 
   render() {
     const { navigation } = this.props;
-    const { drawerOpen } = this.state;
+    const { drawerOpen, showMore } = this.state;
+    const healthy = navigation.getParam('healthy', '');
+    const message = navigation.getParam('message', '');
+    const food = navigation.getParam('food', {});
+    const realMsg = showMore ? message : message.substring(0, 100);
+
     return (
       <Drawer
         open={drawerOpen}
@@ -75,34 +84,33 @@ class ProductOverview extends Component {
             <View style={styles.mainContainer}>
               <View style={styles.product}>
                 <Image
-                  source={main}
+                  source={{ uri: food.image }}
                   style={styles.mainProduct}
                   resizeMode="contain"
                 />
                 <View style={styles.productInfo}>
-                  <Text style={styles.productTitle}>Doritos</Text>
-                  <Text style={styles.productSubtitle}>Tortilla Chips</Text>
-                  <Text style={styles.version}>1.0 oz</Text>
+                  <Text style={styles.productTitle}>{food.brand}</Text>
+                  <Text style={styles.productSubtitle}>{food.label}</Text>
                 </View>
-                <Image
-                  source={moodIcon}
-                  style={styles.mood}
-                  resizeMode="contain"
-                />
+                {healthy && (
+                  <Image
+                    source={moodIcon}
+                    style={styles.mood}
+                    resizeMode="contain"
+                  />
+                )}
               </View>
               <View style={styles.description}>
-                <Text style={styles.descText}>
-                  This item contains Monosodiam Clutamate (MSG), an amino acid
-                  used as a flavor-enhancer in processed foods. It is added to
-                  food to make it more addicting so you will eat more/buy more.
-                </Text>
+                <Text style={styles.descText}>{realMsg}</Text>
               </View>
-              <TouchableOpacity
-                onPress={this.onReadmore}
-                style={styles.readMore}
-              >
-                <Text style={styles.readMoreText}>Read More</Text>
-              </TouchableOpacity>
+              {!showMore && (
+                <TouchableOpacity
+                  onPress={this.onReadmore}
+                  style={styles.readMore}
+                >
+                  <Text style={styles.readMoreText}>Read More</Text>
+                </TouchableOpacity>
+              )}
             </View>
             <View style={styles.suggestContainer}>
               <Text style={styles.suggestTitle}>Might we suggest you try</Text>

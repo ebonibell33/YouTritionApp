@@ -11,23 +11,35 @@ export const styles = StyleSheet.create({
   },
   menuHeader: {
     backgroundColor: '#FFF',
-    borderBottomColor: '#CCC',
     borderBottomWidth: 1,
-    marginTop: 7
+    borderBottomColor: '#CCC',
+    borderTopWidth: 0,
+    elevation: 0,
+    height: 85
   },
   headerBody: {
+    alignSelf: 'flex-end',
     alignItems: 'flex-start',
-    justifyContent: 'flex-start',
-    marginLeft: 10
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: 15
   },
   menuHeaderText: {
     color: '#333',
-    fontSize: 18
+    fontSize: 18,
+    marginLeft: 10
+  },
+  hamburgerIcon: {
+    height: 25,
+    position: 'relative',
+    top: 3,
+    width: 25
   },
   headerMenu: {
     flexDirection: 'row',
     display: 'flex',
-    padding: 4
+    paddingHorizontal: 18,
+    paddingVertical: 4
   },
   headerMenuIcon: {
     height: 20,

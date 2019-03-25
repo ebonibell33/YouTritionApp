@@ -12,6 +12,7 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
     backgroundColor: '#FFF',
     display: 'flex',
+    elevation: 5,
     marginBottom: width * 0.12,
     marginTop: width * 0.12,
     paddingHorizontal: width * 0.05,
@@ -24,7 +25,7 @@ export const styles = StyleSheet.create({
   profileHeader: {
     color: '#707174',
     fontSize: 18,
-    // fontFamily: 'Lato',
+    fontFamily: 'Lato',
     fontWeight: '600',
     marginTop: width * 0.1
   },

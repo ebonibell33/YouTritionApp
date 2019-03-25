@@ -12,6 +12,7 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
     backgroundColor: '#FFF',
     display: 'flex',
+    elevation: 5,
     height: width * 0.63,
     marginTop: width * 0.12,
     shadowColor: 'rgba(0, 0, 0, 0.35)',
@@ -23,14 +24,14 @@ export const styles = StyleSheet.create({
   profileHeader: {
     color: '#707174',
     fontSize: 18,
-    // fontFamily: 'Lato',
+    fontFamily: 'Lato',
     fontWeight: '600',
     marginTop: width * 0.1
   },
   profileDescription: {
     color: '#707174',
     fontSize: 18,
-    // fontFamily: 'Avenir',
+    fontFamily: 'Avenir',
     marginTop: 10,
     textAlign: 'center'
   },
@@ -41,9 +42,9 @@ export const styles = StyleSheet.create({
   },
   button1: {
     alignSelf: 'center',
-    backgroundColor: 'rgba(0,0,0,0)',
+    backgroundColor: '#FFF',
     borderColor: '#1dadeb',
-    borderWidth: 1,
+    borderWidth: 2,
     borderRadius: 5,
     height: width * 0.1455,
     justifyContent: 'center',
@@ -52,8 +53,8 @@ export const styles = StyleSheet.create({
   },
   button1Text: {
     color: '#1dadeb',
-    fontSize: 20
-    // fontFamily: 'Avenir',
+    fontSize: 20,
+    fontFamily: 'Avenir'
   },
   button2: {
     alignSelf: 'center',
@@ -68,14 +69,16 @@ export const styles = StyleSheet.create({
   },
   button2Text: {
     color: '#FFF',
-    fontSize: 20
-    // fontFamily: 'Avenir',
+    fontSize: 20,
+    fontFamily: 'Avenir'
   },
   suggestContainer: {
     alignItems: 'center',
     alignSelf: 'center',
     backgroundColor: '#FFF',
+    elevation: 5,
     height: width * 0.688,
+    marginBottom: width * 0.075,
     marginTop: width * 0.15,
     paddingVertical: 10,
     shadowColor: 'rgba(0, 0, 0, 0.35)',
@@ -89,8 +92,8 @@ export const styles = StyleSheet.create({
     fontSize: 18,
     marginBottom: width * 0.08,
     marginTop: width * 0.04,
-    textAlign: 'center'
-    // fontFamily: 'Lato',
+    textAlign: 'center',
+    fontFamily: 'Lato'
   },
   list: {
     marginLeft: width * 0.05,
@@ -107,7 +110,7 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
     borderRadius: width * 0.033,
     height: width * 0.066,
-    marginRight: width * 0.01,
+    marginRight: width * 0.025,
     width: width * 0.066
   },
   itemColor1: {
@@ -126,7 +129,7 @@ export const styles = StyleSheet.create({
   itemText: {
     color: '#707174',
     flexWrap: 'wrap',
-    fontSize: 14
-    // fontFamily: 'Avenir',
+    fontSize: 14,
+    fontFamily: 'Avenir'
   }
 });

@@ -12,6 +12,7 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
     backgroundColor: '#FFF',
     display: 'flex',
+    elevation: 5,
     height: width * 0.55,
     marginTop: width * 0.12,
     paddingHorizontal: width * 0.02,
@@ -24,7 +25,7 @@ export const styles = StyleSheet.create({
   headerHeader: {
     color: '#707174',
     fontSize: 18,
-    // fontFamily: 'Lato',
+    fontFamily: 'Lato',
     fontWeight: '600',
     marginTop: width * 0.15
   },
@@ -32,7 +33,7 @@ export const styles = StyleSheet.create({
     color: '#707174',
     fontSize: 14,
     lineHeight: 20,
-    // fontFamily: 'Avenir',
+    fontFamily: 'Avenir',
     marginTop: 25,
     textAlign: 'center'
   },
@@ -41,20 +42,20 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
     display: 'flex',
     height: width * 0.85,
-    marginTop: width * 0.12,
+    marginTop: width * 0.05,
     width: width * 0.8
   },
   scanHeader: {
     color: '#707174',
     fontSize: 18,
-    // fontFamily: 'Lato',
+    fontFamily: 'Lato',
     fontWeight: '600',
     marginTop: width * 0.1
   },
   scanDescription: {
     color: '#707174',
     fontSize: 18,
-    // fontFamily: 'Avenir',
+    fontFamily: 'Avenir',
     marginTop: 10
   },
   barcode: {
@@ -73,8 +74,8 @@ export const styles = StyleSheet.create({
   },
   scanButtonText: {
     color: '#FFF',
-    fontSize: 20
-    // fontFamily: 'Avenir',
+    fontSize: 20,
+    fontFamily: 'Avenir'
   },
   suggestContainer: {
     backgroundColor: '#FFF',
@@ -85,8 +86,8 @@ export const styles = StyleSheet.create({
     fontSize: 18,
     marginBottom: width * 0.04,
     marginTop: width * 0.04,
-    textAlign: 'center'
-    // fontFamily: 'Avenir',
+    textAlign: 'center',
+    fontFamily: 'Avenir'
   },
   suggestImage: {
     alignSelf: 'center',

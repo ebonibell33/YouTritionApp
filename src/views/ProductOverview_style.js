@@ -11,6 +11,7 @@ export const styles = StyleSheet.create({
   mainContainer: {
     alignSelf: 'center',
     backgroundColor: 'white',
+    elevation: 5,
     justifyContent: 'flex-start',
     marginTop: width * 0.096,
     padding: width * 0.05,
@@ -45,19 +46,20 @@ export const styles = StyleSheet.create({
     color: '#000000',
     fontSize: 18,
     fontWeight: '600',
-    // fontFamily: 'Lato',
+    fontFamily: 'Lato',
     marginBottom: 5
   },
   productSubtitle: {
     color: '#98989b',
     fontSize: 14,
-    // fontFamily: 'Avenir',
-    marginBottom: 5
+    fontFamily: 'Avenir',
+    marginBottom: 5,
+    width: width * 0.4
   },
   version: {
     color: '#98989b',
     fontSize: 14,
-    // fontFamily: 'Avenir',
+    fontFamily: 'Avenir',
     marginBottom: 5
   },
   description: {
@@ -84,6 +86,7 @@ export const styles = StyleSheet.create({
   suggestContainer: {
     alignSelf: 'center',
     backgroundColor: '#FFF',
+    elevation: 5,
     marginBottom: width * 0.137,
     marginTop: width * 0.137,
     paddingHorizontal: 0.05 * width,

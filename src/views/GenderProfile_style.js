@@ -12,6 +12,7 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
     backgroundColor: '#FFF',
     display: 'flex',
+    elevation: 5,
     height: height * 0.7,
     marginTop: width * 0.12,
     paddingHorizontal: width * 0.05,
@@ -24,14 +25,14 @@ export const styles = StyleSheet.create({
   profileHeader: {
     color: '#707174',
     fontSize: 18,
-    // fontFamily: 'Lato',
+    fontFamily: 'Lato',
     fontWeight: '600',
     marginTop: width * 0.1
   },
   profileDescription: {
     color: '#707174',
     fontSize: 12,
-    // fontFamily: 'Avenir',
+    fontFamily: 'Avenir',
     marginTop: 10
   },
   buttonContainer: {

@@ -13,6 +13,7 @@ const menuIcons = [
   // eslint-disable-next-line
   require('../../images/settings.png')
 ];
+const hamburgerIcon = require('../../images/headerMenu.png');
 
 class SideMenu extends Component {
   onMenu = id => {
@@ -20,10 +21,17 @@ class SideMenu extends Component {
     if (id === 0) {
       navigation.push('CreateProfile');
     } else if (id === 1) {
-      navigation.push('ProductOverview');
+      navigation.push('RecommendedProduct');
     } else {
       navigation.push('RecommendedProduct');
     }
+    if (onClose) {
+      onClose();
+    }
+  };
+
+  onClose = () => {
+    const { onClose } = this.props;
     if (onClose) {
       onClose();
     }
@@ -35,6 +43,13 @@ class SideMenu extends Component {
         <Header style={styles.menuHeader}>
           <Body style={styles.headerBody}>
             <Text style={styles.menuHeaderText}>Guest</Text>
+            <TouchableOpacity onPress={this.onClose}>
+              <Image
+                source={hamburgerIcon}
+                style={styles.hamburgerIcon}
+                resizeMode="contain"
+              />
+            </TouchableOpacity>
           </Body>
         </Header>
         <View>
