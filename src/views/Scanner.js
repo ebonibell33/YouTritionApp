@@ -20,7 +20,6 @@ const unhealthyimage = require('../../images/unhealthyimage.png');
 const healthyimage = require('../../images/healthyimage.png');
 // const scnnerImage = require('../../images/scnnerImage.png');
 
-// const FONT_NAME = 'AvenirNext-Regular';
 const FONT_NAME = 'Avenir';
 
 export default class Scanner extends Component {
@@ -328,7 +327,7 @@ export default class Scanner extends Component {
   fetchResult = (ingredients, fnc) => {
     // const url = `http://13.232.170.63/ing_app/public/api/v1/ingredients`;
     // const url = `http://192.168.0.62:8000/api/v1/ingredients`;
-    const url = `http://8737a57d.ngrok.io/api/v1/ingredients`;
+    const url = `http://0f11408e.ngrok.io/api/v1/ingredients`;
     GET(
       url,
       {},

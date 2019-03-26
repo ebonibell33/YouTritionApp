@@ -1,7 +1,6 @@
 import { Dimensions, StyleSheet } from 'react-native';
 
 const { width } = Dimensions.get('window');
-// const FONT_NAME = 'AvenirNext-Regular';
 const FONT_NAME = 'Avenir';
 
 export const styles = StyleSheet.create({

@@ -145,6 +145,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-camera')
     compile project(':react-native-vector-icons')
     compile project(':react-native-scan-barcode')
     compile project(':react-native-gesture-handler')

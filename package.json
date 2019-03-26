@@ -92,5 +92,10 @@
       "prettier --ignore-path .eslintignore --single-quote --write",
       "git add"
     ]
+  },
+  "rnpm": {
+    "assets": [
+      "./assets/fonts/"
+    ]
   }
 }

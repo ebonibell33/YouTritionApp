@@ -47,7 +47,8 @@ export const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
     fontFamily: 'Lato',
-    marginBottom: 5
+    marginBottom: 5,
+    width: width * 0.4
   },
   productSubtitle: {
     color: '#98989b',

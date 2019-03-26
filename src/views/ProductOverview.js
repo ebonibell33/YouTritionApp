@@ -13,7 +13,8 @@ import CustomHeader from '../component/CustomHeader';
 import SideMenu from '../component/SideMenu';
 import { styles } from './ProductOverview_style';
 
-const background = require('../../images/productBackground.png');
+const backgroundHarm = require('../../images/productBackground.png');
+const backgroundClean = require('../../images/recommendBackground.png');
 // const main = require('../../images/productMain.png');
 const suggest1 = require('../../images/productSuggest1.png');
 const suggest2 = require('../../images/productSuggest2.png');
@@ -51,7 +52,10 @@ class ProductOverview extends Component {
     const message = navigation.getParam('message', '');
     const food = navigation.getParam('food', {});
     const realMsg = showMore ? message : message.substring(0, 100);
+    const background = healthy ? backgroundClean : backgroundHarm;
 
+    console.log('===healthy===', healthy);
+    console.log('===back===', background);
     return (
       <Drawer
         open={drawerOpen}
@@ -86,13 +90,13 @@ class ProductOverview extends Component {
                 <Image
                   source={{ uri: food.image }}
                   style={styles.mainProduct}
-                  resizeMode="contain"
+                  resizeMode="stretch"
                 />
                 <View style={styles.productInfo}>
                   <Text style={styles.productTitle}>{food.brand}</Text>
                   <Text style={styles.productSubtitle}>{food.label}</Text>
                 </View>
-                {healthy && (
+                {!healthy && (
                   <Image
                     source={moodIcon}
                     style={styles.mood}
