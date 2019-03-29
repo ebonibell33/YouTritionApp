@@ -280,15 +280,17 @@ export default class Scanner extends Component {
     );
   }
 
-  fetchResult = (ingredients, callback) => {
+  fetchResult = (food, callback) => {
     const { importData, altData, recommendData } = this.state;
     if (
       importData.length > 0 &&
       altData.length > 0 &&
       recommendData.length > 0
     ) {
-      let index = -1;
-      const data = ingredients.split(';');
+      let mIndex = -1;
+      let rIndex = -1;
+      const data = food.foodContentsLabel.split(';');
+      const foodLabel = food.label.toLowerCase();
       // eslint-disable-next-line
       for (let i = 0; i < data.length; i = i + 1) {
         data[i] = data[i].trim().toLowerCase();
@@ -296,16 +298,25 @@ export default class Scanner extends Component {
       // eslint-disable-next-line
       altData.map(each => {
         if (data.includes(each.alt.toLowerCase())) {
-          index = each.id;
+          mIndex = each.id;
+          
+        }
+      });
+      console.log('===recommendData===', recommendData);
+      // eslint-disable-next-line
+      recommendData.map((each, index) => {
+        if (foodLabel.includes(each.bad_ingredient_product.toLowerCase())) {
+          rIndex = index;
+          
         }
       });
 
-      if (index !== -1) {
+      if (mIndex !== -1) {
         callback({
           error: false,
-          match: importData[index],
-          recommend: null,
-          message: importData[index].bad_reason
+          match: importData[mIndex],
+          recommend: rIndex === -1 ? null : recommendData[rIndex],
+          message: importData[mIndex].bad_reason
         });
       } else {
         callback({
@@ -321,7 +332,7 @@ export default class Scanner extends Component {
       if (waitingCount < waitingMax) {
         this.setState({ waitingCount: waitingCount + 1 });
         setTimeout(() => {
-          this.fetchResult(ingredients, callback);
+          this.fetchResult(food, callback);
         });
       } else {
         callback({
@@ -339,7 +350,7 @@ export default class Scanner extends Component {
     this.setState({ loading: true, waitingMax: 4, waitingCount: 0 });
     this.fetchIngredeants((food, error) => {
       if (food) {
-        this.fetchResult(food.foodContentsLabel, result => {
+        this.fetchResult(food, result => {
           console.log('===result===', result);
           if (result.error) {
             this.setState({ loading: false, showCamera: true });
@@ -351,6 +362,7 @@ export default class Scanner extends Component {
             navigation.push('ProductOverview', {
               healthy: result.match === null, // match === null means healthy
               message: result.message,
+              recommend: result.recommend,
               food
             });
             setTimeout(() => {

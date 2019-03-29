@@ -50,12 +50,13 @@ class ProductOverview extends Component {
     const { drawerOpen, showMore } = this.state;
     const healthy = navigation.getParam('healthy', '');
     const message = navigation.getParam('message', '');
+    const recommend = navigation.getParam('recommend', '');
     const food = navigation.getParam('food', {});
     const realMsg = showMore ? message : message.substring(0, 100);
     const background = healthy ? backgroundClean : backgroundHarm;
 
     console.log('===healthy===', healthy);
-    console.log('===back===', background);
+    console.log('===recommend===', recommend);
     return (
       <Drawer
         open={drawerOpen}
@@ -107,7 +108,7 @@ class ProductOverview extends Component {
               <View style={styles.description}>
                 <Text style={styles.descText}>{realMsg}</Text>
               </View>
-              {!showMore && (
+              {!showMore && message.length > 100 && (
                 <TouchableOpacity
                   onPress={this.onReadmore}
                   style={styles.readMore}
