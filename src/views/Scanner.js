@@ -11,6 +11,7 @@ import {
 import { Button } from 'react-native-elements';
 import { RNCamera } from 'react-native-camera';
 import { GET } from '../utils/functions';
+import { getDataOnce } from '../utils/fire';
 import { styles } from './Scanner_style';
 
 const { width } = Dimensions.get('window');
@@ -33,7 +34,12 @@ export default class Scanner extends Component {
       barcode: '',
       showCamera: false,
       loading: false,
-      result: ''
+      result: '',
+      importData: [],
+      altData: [],
+      recommendData: [],
+      waitingMax: 0,
+      waitingCount: 0
     };
 
     navigation.addListener('willFocus', () => {
@@ -44,6 +50,25 @@ export default class Scanner extends Component {
 
   componentDidMount() {
     this.showCamera();
+    getDataOnce('import', snapshot => {
+      const data = snapshot.val();
+      const altData = [];
+
+      // eslint-disable-next-line
+      data.map((each, index) => {
+        const splits = each.alt_names.split(';');
+        // eslint-disable-next-line
+        splits.map(split => {
+          altData.push({ alt: split.trim(), id: index });
+        });
+      });
+      this.setState({ importData: data, altData });
+    });
+
+    getDataOnce('recommend', snapshot => {
+      const data = snapshot.val();
+      this.setState({ recommendData: data });
+    });
   }
 
   showCamera() {
@@ -255,37 +280,87 @@ export default class Scanner extends Component {
     );
   }
 
+  fetchResult = (ingredients, callback) => {
+    const { importData, altData, recommendData } = this.state;
+    if (
+      importData.length > 0 &&
+      altData.length > 0 &&
+      recommendData.length > 0
+    ) {
+      let index = -1;
+      const data = ingredients.split(';');
+      // eslint-disable-next-line
+      for (let i = 0; i < data.length; i = i + 1) {
+        data[i] = data[i].trim().toLowerCase();
+      }
+      // eslint-disable-next-line
+      altData.map(each => {
+        if (data.includes(each.alt.toLowerCase())) {
+          index = each.id;
+        }
+      });
+
+      if (index !== -1) {
+        callback({
+          error: false,
+          match: importData[index],
+          recommend: null,
+          message: importData[index].bad_reason
+        });
+      } else {
+        callback({
+          error: false,
+          match: null,
+          recommend: null,
+          message:
+            'Way to go! This item does not contain any ingredients that we believe are bad for your health.'
+        });
+      }
+    } else {
+      const { waitingCount, waitingMax } = this.state;
+      if (waitingCount < waitingMax) {
+        this.setState({ waitingCount: waitingCount + 1 });
+        setTimeout(() => {
+          this.fetchResult(ingredients, callback);
+        });
+      } else {
+        callback({
+          error: true,
+          match: null,
+          recommend: null,
+          message: "Sorry, we can't get the required data."
+        });
+      }
+    }
+  };
+
   fetchData = () => {
     const { navigation } = this.props;
-    this.setState({ loading: true });
+    this.setState({ loading: true, waitingMax: 4, waitingCount: 0 });
     this.fetchIngredeants((food, error) => {
       if (food) {
-        this.fetchResult(
-          food.foodContentsLabel,
-          (result, err, ingredients, healthy) => {
-            if (result) {
-              console.log('===detected===', food);
-              navigation.push('ProductOverview', {
-                healthy,
-                message: result,
-                food
+        this.fetchResult(food.foodContentsLabel, result => {
+          console.log('===result===', result);
+          if (result.error) {
+            this.setState({ loading: false, showCamera: true });
+            setTimeout(() => {
+              alert(result.message);
+              this.setState({ barcode: '' });
+            }, 500);
+          } else {
+            navigation.push('ProductOverview', {
+              healthy: result.match === null, // match === null means healthy
+              message: result.message,
+              food
+            });
+            setTimeout(() => {
+              this.setState({
+                loading: false,
+                barcode: ''
               });
-              setTimeout(() => {
-                this.setState({
-                  loading: false,
-                  barcode: ''
-                  // showCamera: true,
-                });
-              }, 500);
-            } else {
-              this.setState({ loading: false, showCamera: true });
-              setTimeout(() => {
-                alert(err.message);
-                this.setState({ barcode: '' });
-              }, 500);
-            }
+            }, 500);
           }
-        );
+        });
       } else {
         this.setState({ loading: false, showCamera: true });
         setTimeout(() => {
@@ -312,7 +387,6 @@ export default class Scanner extends Component {
           if (hints && hints.length > 0) {
             const hint = hints[0];
             const { food } = hint;
-            // const { label, foodContentsLabel } = food;
             fnc(food, error);
           } else {
             fnc(null, response);
@@ -324,54 +398,18 @@ export default class Scanner extends Component {
     );
   };
 
-  fetchResult = (ingredients, fnc) => {
-    // const url = `http://13.232.170.63/ing_app/public/api/v1/ingredients`;
-    // const url = `http://192.168.0.62:8000/api/v1/ingredients`;
-    const url = `http://6b9102db.ngrok.io/api/v1/ingredients`;
-    GET(
-      url,
-      {},
-      {
-        alt_names: ingredients,
-        limit: 1,
-        page: 1
-      },
-      (error, response) => {
-        // debugger;
-        if (response) {
-          const { data, message } = response;
-          if (data.length > 0) {
-            const result = data[0];
-            const { bad_reason: badReason } = result.attributes;
-            fnc(badReason, error, ingredients, false);
-          } else {
-            fnc(message, error, ingredients, true);
-          }
-        } else {
-          fnc(null, error, ingredients, true);
-        }
-      }
-    );
-  };
-
   render() {
     const { loading, showCamera } = this.state;
-    // console.log('====state====', this.state);
     if (loading) {
       return this.renderLoader();
     }
-    // if (result) {
-    //   return this.renderResult();
-    // }
     return (
       <View style={styles.mainContainer}>
         <Modal
           animationType="slide"
           transparent={false}
           visible={showCamera}
-          onRequestClose={() => {
-            // Alert.alert('Modal has been closed.');
-          }}
+          onRequestClose={() => {}}
         >
           {this.renderCamera()}
         </Modal>
