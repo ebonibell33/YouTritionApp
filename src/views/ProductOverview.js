@@ -15,9 +15,6 @@ import { styles } from './ProductOverview_style';
 
 const backgroundHarm = require('../../images/productBackground.png');
 const backgroundClean = require('../../images/recommendBackground.png');
-// const main = require('../../images/productMain.png');
-const suggest1 = require('../../images/productSuggest1.png');
-const suggest2 = require('../../images/productSuggest2.png');
 const moodIcon = require('../../images/noMoodIcon.png');
 
 class ProductOverview extends Component {
@@ -45,6 +42,16 @@ class ProductOverview extends Component {
     this.setState({ showMore: true });
   };
 
+  extractURLs = str => {
+    // eslint-disable-next-line
+    const urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
+    const urls = [];
+    str.replace(urlRegex, url => {
+      urls.push(url);
+    });
+    return urls;
+  };
+
   render() {
     const { navigation } = this.props;
     const { drawerOpen, showMore } = this.state;
@@ -55,8 +62,10 @@ class ProductOverview extends Component {
     const realMsg = showMore ? message : message.substring(0, 100);
     const background = healthy ? backgroundClean : backgroundHarm;
 
-    console.log('===healthy===', healthy);
-    console.log('===recommend===', recommend);
+    const urls =
+      recommend === null ? [] : this.extractURLs(recommend.product_url);
+    console.log('===healthy===', food);
+    // console.log('===recommend===', recommend);
     return (
       <Drawer
         open={drawerOpen}
@@ -117,29 +126,34 @@ class ProductOverview extends Component {
                 </TouchableOpacity>
               )}
             </View>
-            <View style={styles.suggestContainer}>
-              <Text style={styles.suggestTitle}>Might we suggest you try</Text>
-              <View style={styles.productList}>
-                <Image
-                  source={suggest1}
-                  resizeMode="contain"
-                  style={styles.suggest1}
-                />
-                <Image
-                  source={suggest2}
-                  resizeMode="contain"
-                  style={styles.suggest2}
-                />
+            {!healthy && recommend != null && (
+              <View style={styles.suggestContainer}>
+                <Text style={styles.suggestTitle}>
+                  Might we suggest you try
+                </Text>
+                <View
+                  style={
+                    urls.length === 1
+                      ? styles.productContainerSpecial
+                      : styles.productContainer
+                  }
+                >
+                  {urls.map(url => (
+                    <View style={styles.productEach}>
+                      <Image
+                        key={url}
+                        source={{ uri: url }}
+                        resizeMode="contain"
+                        style={styles.suggest1}
+                      />
+                      <Button style={styles.button}>
+                        <Text style={styles.buttonText}>Shop</Text>
+                      </Button>
+                    </View>
+                  ))}
+                </View>
               </View>
-              <View style={styles.productShop}>
-                <Button style={styles.button}>
-                  <Text style={styles.buttonText}>Shop</Text>
-                </Button>
-                <Button style={styles.button}>
-                  <Text style={styles.buttonText}>Shop</Text>
-                </Button>
-              </View>
-            </View>
+            )}
           </ScrollView>
         </ImageBackground>
       </Drawer>

@@ -299,7 +299,6 @@ export default class Scanner extends Component {
       altData.map(each => {
         if (data.includes(each.alt.toLowerCase())) {
           mIndex = each.id;
-          
         }
       });
       console.log('===recommendData===', recommendData);
@@ -307,9 +306,9 @@ export default class Scanner extends Component {
       recommendData.map((each, index) => {
         if (foodLabel.includes(each.bad_ingredient_product.toLowerCase())) {
           rIndex = index;
-          
         }
       });
+      console.log('===rIndex===', rIndex);
 
       if (mIndex !== -1) {
         callback({

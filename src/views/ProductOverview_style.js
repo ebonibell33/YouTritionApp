@@ -88,7 +88,8 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
     backgroundColor: '#FFF',
     elevation: 5,
-    marginBottom: width * 0.137,
+    flexDirection: 'column',
+    marginBottom: width * 0.087,
     marginTop: width * 0.137,
     paddingHorizontal: 0.05 * width,
     paddingVertical: 0.1 * width,
@@ -103,27 +104,37 @@ export const styles = StyleSheet.create({
     color: '#707174',
     fontSize: 18,
     fontFamily: 'Avenir',
-    textAlign: 'center'
+    textAlign: 'center',
+    width: '100%'
   },
-  productList: {
+  productContainer: {
     flexDirection: 'row',
+    flexWrap: 'wrap',
     justifyContent: 'space-between',
-    marginTop: width * 0.06
+    marginTop: width * 0.06,
+    width: '100%'
+  },
+  productContainerSpecial: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: width * 0.06,
+    width: '100%'
+  },
+  productEach: {
+    alignItems: 'center',
+    height: 0.448 * width,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    marginBottom: 0.05 * width,
+    width: 0.316 * width
   },
   suggest1: {
+    alignSelf: 'center',
     height: 0.316 * width,
     width: 0.316 * width
-  },
-  suggest2: {
-    height: 0.316 * width,
-    width: 0.316 * width
-  },
-  productShop: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: width * 0.06
   },
   button: {
+    alignSelf: 'center',
     alignItems: 'center',
     backgroundColor: '#8fc449',
     borderRadius: 6,
