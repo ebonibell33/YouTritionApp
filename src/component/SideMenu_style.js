@@ -50,6 +50,7 @@ export const styles = StyleSheet.create({
   headerMenuText: {
     color: '#333',
     fontSize: 18,
+    fontFamily: 'Avenir-Roman',
     marginLeft: 10
   },
   menuSettings: {

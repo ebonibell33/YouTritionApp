@@ -25,15 +25,15 @@ export const styles = StyleSheet.create({
   headerHeader: {
     color: '#707174',
     fontSize: 18,
-    fontFamily: 'Lato',
-    fontWeight: '600',
+    fontFamily: 'Lato-Bold',
+    // fontWeight: '600',
     marginTop: width * 0.15
   },
   headerDescription: {
     color: '#707174',
     fontSize: 14,
     lineHeight: 20,
-    fontFamily: 'Avenir',
+    fontFamily: 'Avenir-Roman',
     marginTop: 25,
     textAlign: 'center'
   },
@@ -48,14 +48,14 @@ export const styles = StyleSheet.create({
   scanHeader: {
     color: '#707174',
     fontSize: 18,
-    fontFamily: 'Lato',
-    fontWeight: '600',
+    fontFamily: 'Lato-Bold',
+    // fontWeight: '600',
     marginTop: width * 0.1
   },
   scanDescription: {
     color: '#707174',
     fontSize: 18,
-    fontFamily: 'Avenir',
+    fontFamily: 'Avenir-Roman',
     marginTop: 10
   },
   barcode: {
@@ -75,7 +75,7 @@ export const styles = StyleSheet.create({
   scanButtonText: {
     color: '#FFF',
     fontSize: 20,
-    fontFamily: 'Avenir'
+    fontFamily: 'Avenir-Roman'
   },
   suggestContainer: {
     backgroundColor: '#FFF',
@@ -87,7 +87,7 @@ export const styles = StyleSheet.create({
     marginBottom: width * 0.04,
     marginTop: width * 0.04,
     textAlign: 'center',
-    fontFamily: 'Avenir'
+    fontFamily: 'Avenir-Roman'
   },
   suggestImage: {
     alignSelf: 'center',

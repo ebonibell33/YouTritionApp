@@ -29,8 +29,8 @@ public class MainApplication extends Application implements ReactApplication {
           new MainReactPackage(),
             new VectorIconsPackage(),
             new BarcodeScannerPackage(),
-            new RNGestureHandlerPackage(),
-            new RNCameraPackage()
+            new RNCameraPackage(),
+            new RNGestureHandlerPackage()
       );
     }
 

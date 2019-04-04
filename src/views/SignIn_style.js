@@ -26,14 +26,14 @@ export const styles = StyleSheet.create({
   profileHeader: {
     color: '#707174',
     fontSize: 18,
-    fontFamily: 'Lato',
+    fontFamily: 'Lato-Bold',
     fontWeight: '600',
     marginTop: width * 0.1
   },
   profileDescription: {
     color: '#707174',
     fontSize: 12,
-    fontFamily: 'Avenir',
+    fontFamily: 'Avenir-Roman',
     marginTop: 10
   },
   inputContainer: {
@@ -49,7 +49,7 @@ export const styles = StyleSheet.create({
     borderBottomColor: '#000000',
     borderBottomWidth: 1,
     fontSize: 15,
-    fontFamily: 'Avenir',
+    fontFamily: 'Avenir-Roman',
     paddingVertical: 8,
     width: '100%'
   },
@@ -57,7 +57,7 @@ export const styles = StyleSheet.create({
     color: '#000',
     fontSize: 9,
     marginTop: 4,
-    fontFamily: 'Avenir',
+    fontFamily: 'Avenir-Roman',
     textTransform: 'uppercase'
   },
   eyeIconContainer: {
@@ -92,7 +92,7 @@ export const styles = StyleSheet.create({
   button1Text: {
     color: '#FFF',
     fontSize: 20,
-    fontFamily: 'Avenir'
+    fontFamily: 'Avenir-Roman'
   },
   button2: {
     alignSelf: 'center',
@@ -109,7 +109,7 @@ export const styles = StyleSheet.create({
     color: '#1dadeb',
     fontSize: 20,
     textAlign: 'center',
-    fontFamily: 'Avenir'
+    fontFamily: 'Avenir-Roman'
   },
   suggestContainer: {
     alignItems: 'center',
@@ -131,7 +131,7 @@ export const styles = StyleSheet.create({
     marginBottom: width * 0.08,
     marginTop: width * 0.04,
     textAlign: 'center',
-    fontFamily: 'Lato'
+    fontFamily: 'Lato-Bold'
   },
   list: {
     marginLeft: width * 0.05,
@@ -168,6 +168,6 @@ export const styles = StyleSheet.create({
     color: '#707174',
     flexWrap: 'wrap',
     fontSize: 14,
-    fontFamily: 'Avenir'
+    fontFamily: 'Avenir-Roman'
   }
 });

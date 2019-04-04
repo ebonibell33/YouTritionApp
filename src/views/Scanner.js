@@ -21,7 +21,7 @@ const unhealthyimage = require('../../images/unhealthyimage.png');
 const healthyimage = require('../../images/healthyimage.png');
 // const scnnerImage = require('../../images/scnnerImage.png');
 
-const FONT_NAME = 'Avenir';
+const FONT_NAME = 'Avenir-Roman';
 
 export default class Scanner extends Component {
   constructor(props) {

@@ -45,26 +45,26 @@ export const styles = StyleSheet.create({
   productTitle: {
     color: '#000000',
     fontSize: 11,
-    fontWeight: '600',
-    fontFamily: 'Lato',
+    // fontWeight: '600',
+    fontFamily: 'Lato-Bold',
     marginBottom: 5
   },
   productSubtitle: {
     color: '#98989b',
     fontSize: 14,
-    fontFamily: 'Avenir',
+    fontFamily: 'Avenir-Roman',
     marginBottom: 5
   },
   version: {
     color: '#98989b',
     fontSize: 14,
-    fontFamily: 'Avenir',
+    fontFamily: 'Avenir-Roman',
     marginBottom: 5
   },
   price: {
     color: '#707174',
     fontSize: 17,
-    fontFamily: 'Avenir'
+    fontFamily: 'Avenir-Roman'
   },
   shopButton: {
     alignItems: 'center',
@@ -78,7 +78,7 @@ export const styles = StyleSheet.create({
   shopButtonText: {
     color: '#ffffff',
     fontSize: 17,
-    fontFamily: 'Avenir'
+    fontFamily: 'Avenir-Roman'
   },
   description: {
     marginTop: 14,
@@ -87,7 +87,7 @@ export const styles = StyleSheet.create({
   descText: {
     color: '#98989b',
     fontSize: 14,
-    fontFamily: 'Avenir',
+    fontFamily: 'Avenir-Roman',
     textAlign: 'center'
   },
   readMore: {
@@ -98,7 +98,7 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
     color: '#98989b',
     fontSize: 14,
-    fontFamily: 'Avenir',
+    fontFamily: 'Avenir-Roman',
     textDecorationLine: 'underline'
   },
   suggestContainer: {
@@ -119,7 +119,7 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
     color: '#98999b',
     fontSize: 18,
-    fontFamily: 'Avenir',
+    fontFamily: 'Avenir-Roman',
     textAlign: 'center'
   },
   productList: {
@@ -151,6 +151,6 @@ export const styles = StyleSheet.create({
   buttonText: {
     color: '#ffffff',
     fontSize: 16,
-    fontFamily: 'Avenir'
+    fontFamily: 'Avenir-Roman'
   }
 });

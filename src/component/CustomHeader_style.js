@@ -41,7 +41,8 @@ export const styles = StyleSheet.create({
   badgeText: {
     alignSelf: 'center',
     color: '#ffffff',
-    fontSize: 14
+    fontSize: 14,
+    fontFamily: 'Avenir-Roman'
   },
   backTouchable: {
     marginLeft: 10,
