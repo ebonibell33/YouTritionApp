@@ -246,9 +246,18 @@ export default class Scanner extends Component {
       }
       // eslint-disable-next-line
       altData.map(each => {
-        if (data.includes(each.alt.toLowerCase())) {
-          mIndex = each.id;
+        // eslint-disable-next-line
+        data.map(every => {
+          if (every.includes(each.alt.toLowerCase())) {
+            mIndex = each.id;
+          }
+        });
+        if (mIndex !== -1) {
+          return true;
         }
+        // if (data.includes(each.alt.toLowerCase())) {
+        //   mIndex = each.id;
+        // }
       });
       // eslint-disable-next-line
       recommendData.map((each, index) => {
@@ -300,9 +309,9 @@ export default class Scanner extends Component {
         const foodContent = food.foodContentsLabel.toLowerCase();
         const includeFood = [];
         let hasAvoidFood = false;
-        console.log('foodContent===', foodContent);
-        console.log('avoidFood===', avoidFood);
-        console.log('avoidButtons===', avoidButtons);
+        // console.log('foodContent===', foodContent);
+        // console.log('avoidFood===', avoidFood);
+        // console.log('avoidButtons===', avoidButtons);
         if (avoidFood.length > 0) {
           if (avoidFood !== 'None') {
             // eslint-disable-next-line
