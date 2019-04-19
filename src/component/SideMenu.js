@@ -21,6 +21,8 @@ class SideMenu extends Component {
     if (id === 0) {
       navigation.push('CreateProfile');
     } else if (id === 1) {
+      navigation.push('AvoidProfile');
+    } else if (id === 2) {
       navigation.push('RecommendedProduct');
     } else {
       navigation.push('RecommendedProduct');
@@ -66,6 +68,16 @@ class SideMenu extends Component {
           <TouchableOpacity onPress={() => this.onMenu(1)}>
             <View style={styles.headerMenu}>
               <Image
+                source={menuIcons[0]}
+                style={styles.headerMenuIcon}
+                resizeMode="contain"
+              />
+              <Text style={styles.headerMenuText}>Avoid Food</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => this.onMenu(2)}>
+            <View style={styles.headerMenu}>
+              <Image
                 source={menuIcons[1]}
                 style={styles.headerMenuIcon}
                 resizeMode="contain"
@@ -73,7 +85,7 @@ class SideMenu extends Component {
               <Text style={styles.headerMenuText}>Try New Food</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => this.onMenu(2)}>
+          <TouchableOpacity onPress={() => this.onMenu(3)}>
             <View style={styles.headerMenu}>
               <Image
                 source={menuIcons[2]}
@@ -85,7 +97,7 @@ class SideMenu extends Component {
           </TouchableOpacity>
         </View>
         <TouchableOpacity
-          onPress={() => this.onMenu(3)}
+          onPress={() => this.onMenu(4)}
           style={styles.menuSettings}
         >
           <View style={styles.headerMenu}>
