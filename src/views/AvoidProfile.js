@@ -9,62 +9,14 @@ import {
 import Drawer from 'react-native-drawer';
 import CustomHeader from '../component/CustomHeader';
 import SideMenu from '../component/SideMenu';
+import { storeData } from '../utils/functions';
+import { avoidButtons } from '../constants/all';
 import { styles } from './AvoidProfile_style';
 
 const background = require('../../images/homeBackground.png');
 
 // green: 3, blue: 2, other: 1
 const backgroundColors = ['#f59331', '#1daeec', '#8fc449', 'rgba(0,0,0,0)'];
-const buttons = [
-  {
-    title: 'None',
-    style: 3
-  },
-  {
-    title: 'Gluten',
-    style: 2
-  },
-  {
-    title: 'Fish',
-    style: 1
-  },
-  {
-    title: 'Dairy',
-    style: 2
-  },
-  {
-    title: 'Milk',
-    style: 3
-  },
-  {
-    title: 'Poultry',
-    style: 2
-  },
-  {
-    title: 'Meet',
-    style: 1
-  },
-  {
-    title: 'None-None',
-    style: 4
-  },
-  {
-    title: 'Eggs',
-    style: 2
-  },
-  {
-    title: 'Peanuts',
-    style: 1
-  },
-  {
-    title: 'Soy',
-    style: 3
-  },
-  {
-    title: 'Wheat',
-    style: 3
-  }
-];
 
 class AvoidProfile extends Component {
   constructor(props) {
@@ -75,14 +27,9 @@ class AvoidProfile extends Component {
   }
 
   onButton = id => {
-    // const { navigation } = this.props;
-    console.log('id', id);
-    // if (id === 0) {
-    //   navigation.push('SignIn');
-    // }
-    // else {
-    //   navigation.push('SignUp');
-    // }
+    const { navigation } = this.props;
+    storeData('avoidFood', avoidButtons[id].title, () => {});
+    navigation.push('HomeScreen');
   };
 
   onViewAll = () => {
@@ -133,7 +80,7 @@ class AvoidProfile extends Component {
                 Click on all the food that you want to avoid.
               </Text>
               <View style={styles.buttonContainer}>
-                {buttons.map((each, index) => (
+                {avoidButtons.map((each, index) => (
                   <TouchableOpacity
                     key={each.title}
                     style={[

@@ -15,6 +15,7 @@ import AvoidProfile from './AvoidProfile';
 
 const AppNavigator = createStackNavigator(
   {
+    AvoidProfile,
     HomeScreen,
     CreateProfile,
     SignIn,
@@ -22,7 +23,6 @@ const AppNavigator = createStackNavigator(
     StartScreen,
     GenderProfile,
     ConditionProfile,
-    AvoidProfile,
     GetStarted,
     GetStarted2,
     Scanner,

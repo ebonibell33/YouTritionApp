@@ -64,7 +64,7 @@ class ProductOverview extends Component {
 
     const urls =
       recommend === null ? [] : this.extractURLs(recommend.product_url);
-    console.log('===healthy===', food);
+    // console.log('===healthy===', food);
     // console.log('===recommend===', recommend);
     return (
       <Drawer

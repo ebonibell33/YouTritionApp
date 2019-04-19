@@ -10,8 +10,10 @@ import {
 } from 'react-native';
 import { Button } from 'react-native-elements';
 import { RNCamera } from 'react-native-camera';
-import { GET } from '../utils/functions';
+import { GET, retrieveData } from '../utils/functions';
 import { getDataOnce } from '../utils/fire';
+import { avoidButtons } from '../constants/all';
+
 import { styles } from './Scanner_style';
 
 const { width } = Dimensions.get('window');
@@ -19,9 +21,7 @@ const { width } = Dimensions.get('window');
 const loaderimage = require('../../images/loaderImage.png');
 const unhealthyimage = require('../../images/unhealthyimage.png');
 const healthyimage = require('../../images/healthyimage.png');
-// const scnnerImage = require('../../images/scnnerImage.png');
-
-const FONT_NAME = 'Avenir-Roman';
+// const FONT_NAME = 'Avenir-Roman';
 
 export default class Scanner extends Component {
   constructor(props) {
@@ -39,7 +39,10 @@ export default class Scanner extends Component {
       altData: [],
       recommendData: [],
       waitingMax: 0,
-      waitingCount: 0
+      waitingCount: 0,
+      avoidFood: '',
+      hasAvoidFood: false,
+      includeFood: []
     };
 
     navigation.addListener('willFocus', () => {
@@ -69,6 +72,10 @@ export default class Scanner extends Component {
       const data = snapshot.val();
       this.setState({ recommendData: data });
     });
+
+    retrieveData('avoidFood', result => {
+      this.setState({ avoidFood: result.toLowerCase() });
+    });
   }
 
   showCamera() {
@@ -77,7 +84,6 @@ export default class Scanner extends Component {
 
   barcodeReceived() {
     // e
-    // console.log(`Barcode---Type: `, e);
   }
 
   renderLoader() {
@@ -178,90 +184,33 @@ export default class Scanner extends Component {
               );
             }
           }}
-          onGoogleVisionBarcodesDetected={({ barcodes }) => {
-            console.log('===onGoogleVisionBarcodesDetected===', barcodes);
-          }}
+          onGoogleVisionBarcodesDetected={() => {}}
         />
 
-        <View
-          style={{
-            position: 'absolute',
-            top: 0,
-            bottom: 0,
-            left: 0,
-            right: 0
-          }}
-        >
-          <View
-            style={{
-              alignSelf: 'center',
-              alignItems: 'center',
-              justifyContent: 'center',
-              flex: 1
-            }}
-          >
-            <View
-              style={{
-                alignSelf: 'center',
-                justifyContent: 'center',
-                alignItems: 'center',
-                flexDirection: 'column',
-                backgroundColor: 'rgba(0,0,0,0)'
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: 24,
-                  fontWeight: 'normal',
-                  fontFamily: FONT_NAME,
-                  color: 'white'
-                }}
-              >
+        <View style={styles.cameraContainer}>
+          <View style={styles.cameraBody}>
+            <View style={styles.cameraView}>
+              <Text style={styles.detectStatus}>
                 {barcode ? 'Barcode Detected' : 'Position Barcode Here'}
               </Text>
               <View style={styles.scanArea} />
               {barcode.length > 0 && (
-                <Text
-                  style={{
-                    fontSize: 20,
-                    color: 'white',
-                    margin: 8,
-                    marginBottom: 16,
-                    fontWeight: 'bold'
-                  }}
-                >
-                  {barcode}
-                </Text>
+                <Text style={styles.barcode}>{barcode}</Text>
               )}
 
-              <View
-                style={{
-                  flex: 0,
-                  flexDirection: 'row',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  paddingBottom: 8
-                }}
-              >
+              <View style={styles.barcodeButtons}>
                 {barcode.length > 0 && (
                   <Button
                     onPress={() => {
                       this.setState(
                         { barcode: '', loading: false, result: '' },
-                        () => {
-                          // this.fetchData();
-                        }
+                        () => {}
                       );
                     }}
                     rounded
-                    backgroundColor="#85bf43"
+                    backgroundColor="rgb(29, 173, 235)"
                     title="CONTINUE"
-                    textStyle={{
-                      fontSize: 20,
-                      color: '#ffffff',
-                      fontWeight: 'normal',
-                      fontFamily: FONT_NAME
-                    }}
+                    textStyle={styles.continueButton}
                   />
                 )}
 
@@ -301,14 +250,12 @@ export default class Scanner extends Component {
           mIndex = each.id;
         }
       });
-      console.log('===recommendData===', recommendData);
       // eslint-disable-next-line
       recommendData.map((each, index) => {
         if (foodLabel.includes(each.bad_ingredient_product.toLowerCase())) {
           rIndex = index;
         }
       });
-      console.log('===rIndex===', rIndex);
 
       if (mIndex !== -1) {
         callback({
@@ -346,32 +293,66 @@ export default class Scanner extends Component {
 
   fetchData = () => {
     const { navigation } = this.props;
+    const { avoidFood } = this.state;
     this.setState({ loading: true, waitingMax: 4, waitingCount: 0 });
     this.fetchIngredeants((food, error) => {
       if (food) {
-        this.fetchResult(food, result => {
-          console.log('===result===', result);
-          if (result.error) {
-            this.setState({ loading: false, showCamera: true });
-            setTimeout(() => {
-              alert(result.message);
-              this.setState({ barcode: '' });
-            }, 500);
-          } else {
-            navigation.push('ProductOverview', {
-              healthy: result.match === null, // match === null means healthy
-              message: result.message,
-              recommend: result.recommend,
-              food
+        const foodContent = food.foodContentsLabel.toLowerCase();
+        const includeFood = [];
+        let hasAvoidFood = false;
+        console.log('foodContent===', foodContent);
+        console.log('avoidFood===', avoidFood);
+        console.log('avoidButtons===', avoidButtons);
+        if (avoidFood.length > 0) {
+          if (avoidFood !== 'None') {
+            // eslint-disable-next-line
+            avoidButtons.map((each, index) => {
+              if (
+                index !== 0 &&
+                foodContent.includes(each.title.toLowerCase())
+              ) {
+                if (each.title.toLowerCase() === avoidFood) {
+                  hasAvoidFood = true;
+                }
+                includeFood.push(each.title);
+              }
             });
-            setTimeout(() => {
-              this.setState({
-                loading: false,
-                barcode: ''
-              });
-            }, 500);
           }
-        });
+        }
+        console.log('hasAvoidFood===', includeFood);
+        console.log('includeFood===', includeFood);
+        if (hasAvoidFood) {
+          this.setState({
+            hasAvoidFood,
+            includeFood,
+            loading: false,
+            showCamera: true,
+            barcode: ''
+          });
+        } else {
+          this.fetchResult(food, result => {
+            if (result.error) {
+              this.setState({ loading: false, showCamera: true });
+              setTimeout(() => {
+                alert(result.message);
+                this.setState({ barcode: '' });
+              }, 500);
+            } else {
+              navigation.push('ProductOverview', {
+                healthy: result.match === null, // match === null means healthy
+                message: result.message,
+                recommend: result.recommend,
+                food
+              });
+              setTimeout(() => {
+                this.setState({
+                  loading: false,
+                  barcode: ''
+                });
+              }, 500);
+            }
+          });
+        }
       } else {
         this.setState({ loading: false, showCamera: true });
         setTimeout(() => {
@@ -409,11 +390,18 @@ export default class Scanner extends Component {
     );
   };
 
+  closeAlertModal = () => {
+    const { navigation } = this.props;
+    navigation.goBack();
+    // this.setState({ hasAvoidFood: false, includeFood: [], showCamera: true, loading: false });
+  };
+
   render() {
-    const { loading, showCamera } = this.state;
+    const { loading, showCamera, hasAvoidFood, includeFood } = this.state;
     if (loading) {
       return this.renderLoader();
     }
+    console.log('includeFood', includeFood);
     return (
       <View style={styles.mainContainer}>
         <Modal
@@ -423,6 +411,39 @@ export default class Scanner extends Component {
           onRequestClose={() => {}}
         >
           {this.renderCamera()}
+        </Modal>
+        <Modal
+          animationType="slide"
+          transparent
+          visible={hasAvoidFood}
+          presentationStyle="fullScreen"
+          onRequestClose={this.closeAlertModal}
+        >
+          <View style={styles.avoidAlert}>
+            <View style={styles.avoidHead}>
+              <Text style={styles.avoidHeadText}>Youtrition</Text>
+            </View>
+            <View style={styles.avoidBody}>
+              {includeFood.map(each => {
+                return (
+                  <View style={styles.eachFood}>
+                    <View style={styles.eachFoodDot} />
+                    <Text style={styles.eachFoodText}>{each}</Text>
+                  </View>
+                );
+              })}
+            </View>
+            <View style={styles.avoidFooter}>
+              <Button
+                buttonStyle={styles.closerAlertButton}
+                onPress={this.closeAlertModal}
+                rounded
+                large
+                title="Close"
+                textStyle={styles.closerAlertButtonText}
+              />
+            </View>
+          </View>
         </Modal>
       </View>
     );
