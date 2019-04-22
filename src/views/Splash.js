@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Image } from 'react-native';
 import AppNavigator from './RootNavigation';
+import AppNavigator2 from './RootNavigation2';
 import { retrieveData } from '../utils/functions';
 import { styles } from './Splash_style';
 
@@ -15,10 +16,13 @@ export default class Splash extends Component {
   }
 
   componentDidMount = () => {
-    retrieveData('getting_Started', () => {
-      // result, error
+    retrieveData('avoidFoods', result => {
       setTimeout(() => {
-        this.setState({ gettingStarted: 1 });
+        if (result && result.length > 0) {
+          this.setState({ gettingStarted: 1 });
+        } else {
+          this.setState({ gettingStarted: 2 });
+        }
       }, 500);
     });
   };
@@ -26,6 +30,8 @@ export default class Splash extends Component {
   render() {
     const { gettingStarted } = this.state;
     if (gettingStarted === 1) {
+      return <AppNavigator2 />;
+    } else if (gettingStarted === 2) {
       return <AppNavigator />;
     }
     return (

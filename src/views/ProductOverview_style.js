@@ -1,6 +1,6 @@
 import { Dimensions, StyleSheet } from 'react-native';
 
-const { width, height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 export const styles = StyleSheet.create({
   drawerStyles: {},
@@ -147,24 +147,9 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'Avenir-Roman'
   },
-  avoidAlert: {
-    alignSelf: 'center',
-    backgroundColor: '#333',
-    marginTop: (height - 400) / 2,
-    height: 220,
-    width: 300,
-    padding: 20
-  },
-  avoidHead: {},
-  avoidHeadText: {
-    color: 'rgb(29, 173, 235)',
-    fontSize: 24,
-    fontFamily: 'Avenir-Roman',
-    textAlign: 'center'
-  },
   avoidBody: {
-    width: 300,
-    height: 100
+    marginTop: 10,
+    width: '100%'
   },
   eachFood: {
     alignItems: 'center',
@@ -172,29 +157,14 @@ export const styles = StyleSheet.create({
     justifyContent: 'flex-start'
   },
   eachFoodDot: {
-    backgroundColor: '#CCC',
+    backgroundColor: '#98989b',
     borderRadius: 3,
     height: 6,
     marginRight: 15,
     width: 6
   },
   eachFoodText: {
-    color: '#CCC',
+    color: '#98989b',
     fontSize: 16
-  },
-  avoidFooter: {},
-  closerAlertButton: {
-    alignSelf: 'center',
-    backgroundColor: 'rgb(29, 173, 235)',
-    borderRadius: 5,
-    height: width * 0.1455,
-    justifyContent: 'center',
-    marginTop: 5,
-    width: width * 0.426
-  },
-  closerAlertButtonText: {
-    color: '#FFF',
-    fontSize: 20,
-    fontFamily: 'Avenir-Roman'
   }
 });
