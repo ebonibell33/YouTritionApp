@@ -66,5 +66,25 @@ export const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: 'Avenir-Roman',
     textAlign: 'center'
+  },
+  doneButtonDiv: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    width: '100%'
+  },
+  doneButton: {
+    alignSelf: 'center',
+    backgroundColor: 'rgb(29, 173, 235)',
+    borderRadius: 5,
+    height: width * 0.1455,
+    justifyContent: 'center',
+    marginBottom: width * 0.096,
+    width: width * 0.426
+  },
+  doneButtonText: {
+    color: '#FFF',
+    fontSize: 20,
+    fontFamily: 'Avenir-Roman'
   }
 });

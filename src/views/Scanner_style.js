@@ -1,6 +1,6 @@
 import { Dimensions, StyleSheet } from 'react-native';
 
-const { width, height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 const FONT_NAME = 'Avenir-Roman';
 export const styles = StyleSheet.create({
@@ -120,54 +120,5 @@ export const styles = StyleSheet.create({
     color: '#ffffff',
     fontWeight: 'normal',
     fontFamily: FONT_NAME
-  },
-  avoidAlert: {
-    alignSelf: 'center',
-    backgroundColor: '#333',
-    marginTop: (height - 200) / 2,
-    height: 200,
-    width: 300,
-    padding: 20
-  },
-  avoidHead: {},
-  avoidHeadText: {
-    color: 'rgb(29, 173, 235)',
-    fontSize: 24,
-    fontFamily: 'Avenir-Roman',
-    textAlign: 'center'
-  },
-  avoidBody: {
-    width: 300
-  },
-  eachFood: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'flex-start'
-  },
-  eachFoodDot: {
-    backgroundColor: '#CCC',
-    borderRadius: 3,
-    height: 6,
-    marginRight: 15,
-    width: 6
-  },
-  eachFoodText: {
-    color: '#CCC',
-    fontSize: 16
-  },
-  avoidFooter: {},
-  closerAlertButton: {
-    alignSelf: 'center',
-    backgroundColor: 'rgb(29, 173, 235)',
-    borderRadius: 5,
-    height: width * 0.1455,
-    justifyContent: 'center',
-    marginTop: width * 0.096,
-    width: width * 0.426
-  },
-  closerAlertButtonText: {
-    color: '#FFF',
-    fontSize: 20,
-    fontFamily: 'Avenir-Roman'
   }
 });

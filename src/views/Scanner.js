@@ -3,16 +3,15 @@ import {
   Text,
   View,
   Image,
-  Modal,
   // Alert,
   ScrollView,
-  Dimensions
+  Dimensions,
+  Modal
 } from 'react-native';
 import { Button } from 'react-native-elements';
 import { RNCamera } from 'react-native-camera';
 import { GET, retrieveData } from '../utils/functions';
 import { getDataOnce } from '../utils/fire';
-import { avoidButtons } from '../constants/all';
 
 import { styles } from './Scanner_style';
 
@@ -40,9 +39,10 @@ export default class Scanner extends Component {
       recommendData: [],
       waitingMax: 0,
       waitingCount: 0,
-      avoidFood: '',
-      hasAvoidFood: false,
-      includeFood: []
+      avoidFoods: [],
+      // hasAvoidFood: false,
+      includeFood: [],
+      avoidFoodsData: {}
     };
 
     navigation.addListener('willFocus', () => {
@@ -62,7 +62,9 @@ export default class Scanner extends Component {
         const splits = each.alt_names.split(';');
         // eslint-disable-next-line
         splits.map(split => {
-          altData.push({ alt: split.trim(), id: index });
+          if (split.length > 0) {
+            altData.push({ alt: split.trim(), id: index });
+          }
         });
       });
       this.setState({ importData: data, altData });
@@ -73,8 +75,22 @@ export default class Scanner extends Component {
       this.setState({ recommendData: data });
     });
 
-    retrieveData('avoidFood', result => {
-      this.setState({ avoidFood: result.toLowerCase() });
+    getDataOnce('avoid', snapshot => {
+      const data = snapshot.val();
+      const avoidData = {};
+      for (let i = 0; i < data.length; i += 1) {
+        const each = [];
+        each.productArray = data[i].product_names.replace(/\s/g, '').split(',');
+        each.ingredientsArray = data[i].specific_ingredients
+          .replace(/\s/g, '')
+          .split(',');
+        avoidData[data[i].food_item_avoid] = each;
+      }
+      this.setState({ avoidFoodsData: avoidData });
+    });
+
+    retrieveData('avoidFoods', result => {
+      this.setState({ avoidFoods: JSON.parse(result) });
     });
   }
 
@@ -302,66 +318,74 @@ export default class Scanner extends Component {
 
   fetchData = () => {
     const { navigation } = this.props;
-    const { avoidFood } = this.state;
+    const { avoidFoods, avoidFoodsData } = this.state;
     this.setState({ loading: true, waitingMax: 4, waitingCount: 0 });
     this.fetchIngredeants((food, error) => {
       if (food) {
         const foodContent = food.foodContentsLabel.toLowerCase();
+        const foodLabel = food.label.toLowerCase();
         const includeFood = [];
         let hasAvoidFood = false;
         // console.log('foodContent===', foodContent);
-        // console.log('avoidFood===', avoidFood);
+        // console.log('avoidFoods===', avoidFoods);
         // console.log('avoidButtons===', avoidButtons);
-        if (avoidFood.length > 0) {
-          if (avoidFood !== 'None') {
+        // console.log('avoidFoodsData===', avoidFoodsData);
+        if (avoidFoods.length > 0) {
+          if (avoidFoods.length === 1 && avoidFoods === 'None') {
+            console.log('Do not avoid the foods');
+          } else {
             // eslint-disable-next-line
-            avoidButtons.map((each, index) => {
-              if (
-                index !== 0 &&
-                foodContent.includes(each.title.toLowerCase())
-              ) {
-                if (each.title.toLowerCase() === avoidFood) {
-                  hasAvoidFood = true;
-                }
-                includeFood.push(each.title);
+            avoidFoods.map((avoidFood, ind) => {
+              const avoid = avoidFoodsData[avoidFood];
+              let match = false;
+              if (avoid) {
+                // eslint-disable-next-line
+                avoid.productArray.map(product => {
+                  if (foodLabel.includes(product.toLowerCase())) {
+                    match = true;
+                    return true;
+                  }
+                });
+                // eslint-disable-next-line
+                avoid.ingredientsArray.map(ingredient => {
+                  if (foodContent.includes(ingredient.toLowerCase())) {
+                    match = true;
+                    return true;
+                  }
+                });
+              }
+              if (match) {
+                hasAvoidFood = true;
+                includeFood.push(avoidFood);
               }
             });
           }
         }
-        console.log('hasAvoidFood===', includeFood);
-        console.log('includeFood===', includeFood);
-        if (hasAvoidFood) {
-          this.setState({
-            hasAvoidFood,
-            includeFood,
-            loading: false,
-            showCamera: true,
-            barcode: ''
-          });
-        } else {
-          this.fetchResult(food, result => {
-            if (result.error) {
-              this.setState({ loading: false, showCamera: true });
-              setTimeout(() => {
-                alert(result.message);
-                this.setState({ barcode: '' });
-              }, 500);
-            } else {
-              navigation.push('ProductOverview', {
-                healthy: result.match === null, // match === null means healthy
-                message: result.message,
-                recommend: result.recommend,
-                food
+
+        this.fetchResult(food, result => {
+          if (result.error) {
+            this.setState({ loading: false, showCamera: true });
+            setTimeout(() => {
+              alert(result.message);
+              this.setState({ barcode: '' });
+            }, 500);
+          } else {
+            navigation.push('ProductOverview', {
+              healthy: result.match === null, // match === null means healthy
+              message: result.message,
+              recommend: result.recommend,
+              hasAvoidFood,
+              includeFood,
+              food
+            });
+            setTimeout(() => {
+              this.setState({
+                loading: false,
+                barcode: ''
               });
-              setTimeout(() => {
-                this.setState({
-                  loading: false,
-                  barcode: ''
-                });
-              }, 500);
-            }
-          });
-        }
+            }, 500);
+          }
+        });
       } else {
         this.setState({ loading: false, showCamera: true });
         setTimeout(() => {
@@ -399,14 +423,8 @@ export default class Scanner extends Component {
     );
   };
 
-  closeAlertModal = () => {
-    const { navigation } = this.props;
-    navigation.goBack();
-    // this.setState({ hasAvoidFood: false, includeFood: [], showCamera: true, loading: false });
-  };
-
   render() {
-    const { loading, showCamera, hasAvoidFood, includeFood } = this.state;
+    const { loading, showCamera, includeFood } = this.state;
     if (loading) {
       return this.renderLoader();
     }
@@ -420,39 +438,6 @@ export default class Scanner extends Component {
           onRequestClose={() => {}}
         >
           {this.renderCamera()}
-        </Modal>
-        <Modal
-          animationType="slide"
-          transparent
-          visible={hasAvoidFood}
-          presentationStyle="fullScreen"
-          onRequestClose={this.closeAlertModal}
-        >
-          <View style={styles.avoidAlert}>
-            <View style={styles.avoidHead}>
-              <Text style={styles.avoidHeadText}>Youtrition</Text>
-            </View>
-            <View style={styles.avoidBody}>
-              {includeFood.map(each => {
-                return (
-                  <View style={styles.eachFood}>
-                    <View style={styles.eachFoodDot} />
-                    <Text style={styles.eachFoodText}>{each}</Text>
-                  </View>
-                );
-              })}
-            </View>
-            <View style={styles.avoidFooter}>
-              <Button
-                buttonStyle={styles.closerAlertButton}
-                onPress={this.closeAlertModal}
-                rounded
-                large
-                title="Close"
-                textStyle={styles.closerAlertButtonText}
-              />
-            </View>
-          </View>
         </Modal>
       </View>
     );

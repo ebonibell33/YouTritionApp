@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ImageBackground
 } from 'react-native';
+import { Button } from 'react-native-elements';
 import Drawer from 'react-native-drawer';
 import CustomHeader from '../component/CustomHeader';
 import SideMenu from '../component/SideMenu';
@@ -22,14 +23,29 @@ class AvoidProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      drawerOpen: null
+      drawerOpen: null,
+      avoidFoods: []
     };
   }
 
   onButton = id => {
+    const { avoidFoods } = this.state;
+    if (avoidButtons[id].title === 'None') {
+      const { navigation } = this.props;
+      storeData('avoidFoods', JSON.stringify([]), () => {
+        navigation.push('HomeScreen');
+      });
+    } else if (!avoidFoods.includes(avoidButtons[id].title)) {
+      avoidFoods.push(avoidButtons[id].title.toLowerCase());
+    }
+  };
+
+  onDoneButton = () => {
     const { navigation } = this.props;
-    storeData('avoidFood', avoidButtons[id].title, () => {});
-    navigation.push('HomeScreen');
+    const { avoidFoods } = this.state;
+    storeData('avoidFoods', JSON.stringify(avoidFoods), () => {
+      navigation.push('HomeScreen');
+    });
   };
 
   onViewAll = () => {
@@ -72,7 +88,11 @@ class AvoidProfile extends Component {
           style={styles.imgBack}
           resizeMode="stretch"
         >
-          <CustomHeader onMenu={this.onMenu} showBack={false} />
+          <CustomHeader
+            onMenu={this.onMenu}
+            showMenu={false}
+            showBack={false}
+          />
           <ScrollView>
             <View style={styles.profileContainer}>
               <Text style={styles.profileHeader}>I want to avoid...</Text>
@@ -94,6 +114,16 @@ class AvoidProfile extends Component {
                     <Text style={styles.buttonText}>{each.title}</Text>
                   </TouchableOpacity>
                 ))}
+              </View>
+              <View style={styles.doneButtonDiv}>
+                <Button
+                  buttonStyle={styles.doneButton}
+                  onPress={this.onDoneButton}
+                  rounded
+                  large
+                  title="Done"
+                  textStyle={styles.doneButtonText}
+                />
               </View>
             </View>
           </ScrollView>

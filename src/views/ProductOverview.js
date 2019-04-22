@@ -5,7 +5,8 @@ import {
   View,
   Image,
   TouchableOpacity,
-  ImageBackground
+  ImageBackground,
+  Modal
 } from 'react-native';
 import { Button } from 'native-base';
 import Drawer from 'react-native-drawer';
@@ -22,7 +23,8 @@ class ProductOverview extends Component {
     super(props);
     this.state = {
       drawerOpen: null,
-      showMore: false
+      showMore: false,
+      showModal: props.navigation.getParam('hasAvoidFood', false)
     };
   }
 
@@ -52,12 +54,18 @@ class ProductOverview extends Component {
     return urls;
   };
 
+  closeAlertModal = () => {
+    this.setState({ showModal: false });
+  };
+
   render() {
     const { navigation } = this.props;
-    const { drawerOpen, showMore } = this.state;
+    const { drawerOpen, showMore, showModal } = this.state;
     const healthy = navigation.getParam('healthy', '');
     const message = navigation.getParam('message', '');
     const recommend = navigation.getParam('recommend', '');
+    // const hasAvoidFood = navigation.getParam('hasAvoidFood', false);
+    const includeFood = navigation.getParam('includeFood', '');
     const food = navigation.getParam('food', {});
     const realMsg = showMore ? message : message.substring(0, 100);
     const background = healthy ? backgroundClean : backgroundHarm;
@@ -66,6 +74,9 @@ class ProductOverview extends Component {
       recommend === null ? [] : this.extractURLs(recommend.product_url);
     // console.log('===healthy===', food);
     // console.log('===recommend===', recommend);
+    // console.log('hasAvoidFood===', hasAvoidFood);
+    // console.log('includeFood===', includeFood);
+
     return (
       <Drawer
         open={drawerOpen}
@@ -155,6 +166,39 @@ class ProductOverview extends Component {
               </View>
             )}
           </ScrollView>
+          <Modal
+            animationType="slide"
+            transparent
+            visible={showModal}
+            presentationStyle="fullScreen"
+            onRequestClose={this.closeAlertModal}
+          >
+            <View style={styles.avoidAlert}>
+              <View style={styles.avoidHead}>
+                <Text style={styles.avoidHeadText}>Youtrition</Text>
+              </View>
+              <View style={styles.avoidBody}>
+                <ScrollView>
+                  {includeFood.map(each => {
+                    return (
+                      <View style={styles.eachFood}>
+                        <View style={styles.eachFoodDot} />
+                        <Text style={styles.eachFoodText}>{each} Detected</Text>
+                      </View>
+                    );
+                  })}
+                </ScrollView>
+              </View>
+              <View style={styles.avoidFooter}>
+                <Button
+                  style={styles.closerAlertButton}
+                  onPress={this.closeAlertModal}
+                >
+                  <Text style={styles.closerAlertButtonText}>Close</Text>
+                </Button>
+              </View>
+            </View>
+          </Modal>
         </ImageBackground>
       </Drawer>
     );
