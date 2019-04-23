@@ -11,10 +11,12 @@ import GetStarted2 from './getStarted2';
 import Scanner from './Scanner';
 import ProductOverview from './ProductOverview';
 import RecommendedProduct from './RecommendedProduct';
+import AvoidProfile from './AvoidProfile';
 
 const AppNavigator = createStackNavigator(
   {
     HomeScreen,
+    AvoidProfile,
     CreateProfile,
     SignIn,
     SignUp,
