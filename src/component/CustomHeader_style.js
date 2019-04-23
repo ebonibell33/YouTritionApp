@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
   },
   headerLogo: {
     alignSelf: 'center',
-    height: width * 0.085,
+    height: width * 0.055,
     width: '100%'
   },
   headerBack: {
