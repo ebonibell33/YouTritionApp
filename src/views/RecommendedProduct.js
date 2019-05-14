@@ -5,7 +5,8 @@ import {
   View,
   Image,
   TouchableOpacity,
-  ImageBackground
+  ImageBackground,
+  Linking,
 } from 'react-native';
 import { Button } from 'native-base';
 import Drawer from 'react-native-drawer';
@@ -22,11 +23,13 @@ const moodIcon = require('../../images/noMoodIcon.png');
 class RecommendedProduct extends Component {
   constructor(props) {
     super(props);
-    this.state = { drawerOpen: null };
+    this.state = { 
+      drawerOpen: null,
+      showMore: false,
+    };
   }
 
   componentDidMount() {
-    console.log('componentDidMount');
     this.setState({ drawerOpen: null });
   }
 
@@ -38,11 +41,25 @@ class RecommendedProduct extends Component {
     this.setState({ drawerOpen: false });
   };
 
-  onReadmore = () => {};
+  onReadmore = () => {
+    this.setState({ showMore: true });
+  };
+
+  goShop = (url) => {
+    Linking.openURL(url);
+  }
 
   render() {
     const { navigation } = this.props;
-    const { drawerOpen } = this.state;
+    const { drawerOpen, showMore } = this.state;
+    const url = navigation.getParam('url', "");
+    const info = navigation.getParam('info', {});
+    const others = navigation.getParam('others', []);
+    const realMsg = showMore ? info.product_response : info.product_response.substring(0, 100);
+    // console.log('***url***', url);
+    // console.log('***info***', info);
+    // console.log('***others***', others);
+
     return (
       <Drawer
         open={drawerOpen}
@@ -75,59 +92,54 @@ class RecommendedProduct extends Component {
             <View style={styles.mainContainer}>
               <View style={styles.product}>
                 <Image
-                  source={main}
+                  source={{ uri: url }}
                   style={styles.mainProduct}
                   resizeMode="contain"
                 />
                 <View style={styles.productInfo}>
-                  <Text style={styles.productTitle}>Rhythm Superfoods</Text>
-                  <Text style={styles.productSubtitle}>Chips</Text>
-                  <Text style={styles.version}>1.0 oz</Text>
-                  <Text style={styles.price}>$4.79</Text>
-                  <Button style={styles.shopButton}>
+                  <Text style={styles.productTitle} numberOfLines={2}>{info.label}</Text>
+                  <Text style={styles.price}>${info.price}</Text>
+                  <Button style={styles.shopButton} onPress={() => this.goShop(info.link_to_buy)}>
                     <Text style={styles.shopButtonText}>Shop</Text>
                   </Button>
                 </View>
-                <Image
-                  source={moodIcon}
-                  style={styles.mood}
-                  resizeMode="contain"
-                />
               </View>
               <View style={styles.description}>
                 <Text style={styles.descText}>
-                  Rhythm Superfoos snacks aren’t just “less bad” than other
-                  chips- they’re actually great for you!
+                  {realMsg}
                 </Text>
               </View>
-              <TouchableOpacity
-                onPress={this.onReadmore}
-                style={styles.readMore}
-              >
-                <Text style={styles.readMoreText}>Read More</Text>
-              </TouchableOpacity>
+              {!showMore && info.product_response.length > 100 && (
+                <TouchableOpacity
+                  onPress={this.onReadmore}
+                  style={styles.readMore}
+                >
+                  <Text style={styles.readMoreText}>Read More</Text>
+                </TouchableOpacity>
+              )}
             </View>
             <View style={styles.suggestContainer}>
               <Text style={styles.suggestTitle}>Other options</Text>
-              <View style={styles.productList}>
-                <Image
-                  source={suggest1}
-                  resizeMode="contain"
-                  style={styles.suggest1}
-                />
-                <Image
-                  source={suggest2}
-                  resizeMode="contain"
-                  style={styles.suggest2}
-                />
-              </View>
-              <View style={styles.productShop}>
-                <Button style={styles.button}>
-                  <Text style={styles.buttonText}>Shop</Text>
-                </Button>
-                <Button style={styles.button}>
-                  <Text style={styles.buttonText}>Shop</Text>
-                </Button>
+              <View
+                style={
+                  others.length === 1
+                    ? styles.productContainerSpecial
+                    : styles.productContainer
+                }
+              >
+                {others.map((other, index) => (
+                  <View style={styles.productEach} key={index}>
+                    <Image
+                      key={other.label}
+                      source={{ uri: other.image }}
+                      resizeMode="contain"
+                      style={styles.suggest1}
+                    />
+                    <Button style={styles.button} onPress={() => this.goShop(other.shop_link)}>
+                      <Text style={styles.buttonText}>Shop</Text>
+                    </Button>
+                  </View>
+                ))}
               </View>
             </View>
           </ScrollView>

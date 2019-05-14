@@ -428,7 +428,6 @@ export default class Scanner extends Component {
     if (loading) {
       return this.renderLoader();
     }
-    console.log('includeFood', includeFood);
     return (
       <View style={styles.mainContainer}>
         <Modal

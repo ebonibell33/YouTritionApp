@@ -53,12 +53,22 @@ class ProductOverview extends Component {
     return urls;
   };
 
+  onShop = (url, index) => {
+    const { navigation } = this.props;
+    const recommend = navigation.getParam('recommend', null);
+    navigation.push('RecommendedProduct', {
+      url, 
+      info: recommend.recommend[index],
+      others: recommend.other_options,
+    });
+  }
+
   render() {
     const { navigation } = this.props;
     const { drawerOpen, showMore, showDetected } = this.state;
-    const healthy = navigation.getParam('healthy', '');
+    const healthy = navigation.getParam('healthy', false);
     const message = navigation.getParam('message', '');
-    const recommend = navigation.getParam('recommend', '');
+    const recommend = navigation.getParam('recommend', null);
     // const hasAvoidFood = navigation.getParam('hasAvoidFood', false);
     const includeFood = navigation.getParam('includeFood', '');
     const food = navigation.getParam('food', {});
@@ -67,6 +77,7 @@ class ProductOverview extends Component {
 
     const urls =
       recommend === null ? [] : this.extractURLs(recommend.product_url);
+    // console.log('**recommend**', recommend);
     // console.log('===healthy===', food);
     // console.log('===recommend===', recommend);
     // console.log('hasAvoidFood===', hasAvoidFood);
@@ -159,15 +170,15 @@ class ProductOverview extends Component {
                       : styles.productContainer
                   }
                 >
-                  {urls.map(url => (
-                    <View style={styles.productEach}>
+                  {urls.map((url, index) => (
+                    <View style={styles.productEach} key={index}>
                       <Image
                         key={url}
                         source={{ uri: url }}
                         resizeMode="contain"
                         style={styles.suggest1}
                       />
-                      <Button style={styles.button}>
+                      <Button style={styles.button} onPress={() => this.onShop(url, index)}>
                         <Text style={styles.buttonText}>Shop</Text>
                       </Button>
                     </View>

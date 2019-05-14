@@ -47,7 +47,8 @@ export const styles = StyleSheet.create({
     fontSize: 11,
     // fontWeight: '600',
     fontFamily: 'Lato-Bold',
-    marginBottom: 5
+    marginBottom: 5,
+    width: width * 0.4,
   },
   productSubtitle: {
     color: '#98989b',
@@ -122,35 +123,44 @@ export const styles = StyleSheet.create({
     fontFamily: 'Avenir-Roman',
     textAlign: 'center'
   },
-  productList: {
+  productContainer: {
     flexDirection: 'row',
+    flexWrap: 'wrap',
     justifyContent: 'space-between',
-    marginTop: width * 0.04
+    marginTop: width * 0.06,
+    width: '100%'
+  },
+  productContainerSpecial: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: width * 0.06,
+    width: '100%'
+  },
+  productEach: {
+    alignItems: 'center',
+    height: 0.448 * width,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    marginBottom: 0.05 * width,
+    width: 0.316 * width
   },
   suggest1: {
+    alignSelf: 'center',
     height: 0.316 * width,
     width: 0.316 * width
-  },
-  suggest2: {
-    height: 0.316 * width,
-    width: 0.316 * width
-  },
-  productShop: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: width * 0.06
   },
   button: {
+    alignSelf: 'center',
     alignItems: 'center',
     backgroundColor: '#8fc449',
-    borderRadius: 4,
-    height: width * 0.093,
+    borderRadius: 6,
+    height: width * 0.103,
     justifyContent: 'center',
-    width: width * 0.262
+    width: width * 0.304
   },
   buttonText: {
     color: '#ffffff',
     fontSize: 16,
     fontFamily: 'Avenir-Roman'
-  }
+  },
 });
